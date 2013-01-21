@@ -1,0 +1,5 @@
+/.buildpath
+/.project
+/.settings
+/config/config_app.php
+/config/routing.php
