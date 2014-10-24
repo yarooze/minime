@@ -1,6 +1,8 @@
 <?php
 namespace App\Core;
 
+use App\Exception\MinimeException;
+
 /**
  *
  * @author jb
@@ -172,5 +174,49 @@ Class Router
   public function getActionName()
   {
     return $this->current_route['action'];
+  }
+
+  public function getRouteByName($routeName)
+  {
+    $route = null;
+    if(array_key_exists($routeName, $this->routing)) {
+      $route = $this->routing[$routeName];
+    }
+    return $route;
+  }
+
+  public function getUrl($routeName, $params = array(), $global = false) {
+
+    $route = $this->getRouteByName($routeName);
+    if($route == null) {
+      throw new MinimeException('Unknown route!');
+    }
+    $location = '';
+    foreach($route['url'] as $urlPart) {
+      $location .= '/'. $urlPart;
+    }
+    foreach($route['formats'] as $format) {
+      $location .= '.'. $format;
+      break;
+    }
+
+    if(array_key_exists('query', $params)) {
+      $location .= '?'.http_build_query($params['query']);
+    }
+
+    if($global) {
+      $location = "http://" . $_SERVER['HTTP_HOST'] . $location;
+    }
+
+    return $location;
+  }
+
+  public function redirect($routeName, $params = array()) {
+
+    $location = $this->getUrl($routeName, $params, true);
+
+    header("Location: " . $location);
+    //header('Location:'.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+    die();
   }
 }
