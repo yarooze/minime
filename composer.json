@@ -1,0 +1,25 @@
+{
+    "name": "Yarooze/Minime",
+    "require": {
+        "yarooze/twittee": "dev-master"
+    },
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "https://github.com/yarooze/twittee"
+      }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "authors": [
+        {
+            "name": "Yaroozer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+          "App\\": "src/App"
+        }
+    }
+}
