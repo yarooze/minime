@@ -3,3 +3,4 @@
 /.settings
 /config/config_app.php
 /config/routing.php
+/vendor
