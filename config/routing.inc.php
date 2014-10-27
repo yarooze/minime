@@ -24,6 +24,28 @@ return array(
             'action'  => 'defaultAction',
       ),
   //
+      'MyRegister' =>
+      array('url'        => array('register'),
+          'methods'    => array('get'),
+          'formats'    => array('html'),
+          'controller' => 'DefaultController',
+          'action'     => 'defaultAction',
+      ),
+      'MyRegisterSubmit' =>
+      array('url'        => array('register','submit'),
+          'methods'    => array('post'),
+          'formats'    => array('html'),
+          'controller' => 'DefaultController',
+          'action'     => 'mySubmitAction',
+      ),
+      'MyRegisterSuccess' =>
+      array('url'        => array('register','success'),
+          'methods'    => array('get'),
+          'formats'    => array('html'),
+          'controller' => 'DefaultController',
+          'action'     => 'myRegisterSuccessAction',
+      ),
+  //
       'default' =>
       array('url'     => array(),
             'methods' => array(),

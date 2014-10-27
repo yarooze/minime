@@ -1,5 +1,6 @@
 {
     "name": "Yarooze/Minime",
+    "license": "Public Domain",
     "require": {
         "yarooze/twittee": "dev-master"
     },
@@ -9,12 +10,9 @@
         "url": "https://github.com/yarooze/twittee"
       }
     ],
-    "require": {
-        "php": ">=5.4.0"
-    },
     "authors": [
         {
-            "name": "Yaroozer"
+            "name": "Yarooze"
         }
     ],
     "autoload": {

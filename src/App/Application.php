@@ -1,6 +1,10 @@
 <?php
 namespace App;
 
+require_once __DIR__.'/Exception/MinimeException.php';
+//require_once __DIR__.'/../../vendor/autoload.php';
+require_once __DIR__.'/../../vendor/yarooze/twittee/src/Twittee/Container.php';
+
 use Twittee\Container as Container,
     App\Exception\MinimeException as MinimeException;
 

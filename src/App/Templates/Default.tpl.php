@@ -5,9 +5,9 @@
   <title>Minime</title>
 </head>
 <body>
-<h1>Data:</h1>
+<h1><?php $view->printString('Data'); ?>:</h1>
 <?php
-  var_dump($data);
+  $view->renderPartial('myPartial', array('data'=>$data));
 ?>
 </body>
 </html>
