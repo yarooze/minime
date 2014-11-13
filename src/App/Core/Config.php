@@ -41,7 +41,7 @@ class Config
     {
       return $this->app->cfg[$name];
     }
-    elseif(array_key_exists($name, $this->app->cfg))
+    elseif(array_key_exists($name, $this->cfg))
     {
       return $this->cfg[$name];
     }

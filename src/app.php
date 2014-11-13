@@ -20,6 +20,9 @@ if($app->config->get('env') != 'internal')
   $request = $app->loadClass('Request', '\App\Core\\', '/Core/');
   $app->request = function ($app) use ($request) { return $request; };
 
+  $session = $app->loadClass('Session', '\App\Core\\', '/Core/');
+  $app->session = function ($app) use ($session) { return $session; };
+
   $router = $app->loadClass('Router', '\App\Core\\', '/Core/');
   $app->router  = function ($app) use ($router) { return $router; };
 }
