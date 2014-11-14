@@ -3,8 +3,10 @@ namespace App\Controller;
 
 require_once __DIR__.'/BaseController.php';
 require_once __DIR__.'/../View/DefaultView.php';
+require_once __DIR__.'/../Form/MyRegisterForm.php';
 
-use App\View\DefaultView as DefaultView;
+use App\View\DefaultView as DefaultView,
+    App\Form\MyRegisterForm as RegisterForm;
 
 /**
  *
@@ -18,7 +20,7 @@ Class DefaultController extends BaseController
 
     $data = $this->app->request->getParameters();
 
-    $form = new MyRegisterForm();
+    $form = new RegisterForm();
 
     $view->render(array('data' => $data,'form' => $form));
   }

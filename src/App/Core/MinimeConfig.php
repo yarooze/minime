@@ -8,7 +8,7 @@ namespace App\Core;
  */
 use App\Exception\MinimeException;
 
-class Config
+class MinimeConfig
 {
   /**
    * @var \App\Application
@@ -41,7 +41,7 @@ class Config
     {
       return $this->app->cfg[$name];
     }
-    elseif(array_key_exists($name, $this->cfg))
+    elseif(array_key_exists($name, $this->app->cfg))
     {
       return $this->cfg[$name];
     }

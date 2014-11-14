@@ -8,7 +8,7 @@ use App\Exception\MinimeException;
  * @author jb
  *
  */
-Class Router
+Class MinimeRouter
 {
   /**
    * REQUEST_URI

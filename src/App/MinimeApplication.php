@@ -3,9 +3,9 @@ namespace App;
 
 require_once __DIR__.'/Exception/MinimeException.php';
 //require_once __DIR__.'/../../vendor/autoload.php';
-require_once __DIR__.'/../../vendor/yarooze/twittee/src/Twittee/Container.php';
+//require_once __DIR__.'/../../../twittee/src/Twittee/Container.php';
 
-use Twittee\Container as Container,
+use App\Core\Container as Container,
     App\Exception\MinimeException as MinimeException;
 
 /**
@@ -13,8 +13,8 @@ use Twittee\Container as Container,
  * @author jb
  *
  */
-class Application extends Container
-{
+class MinimeApplication extends Container
+{ 
   public function run()
   {
     if(!$this->auth->isAuthenticated())
@@ -67,9 +67,9 @@ class Application extends Container
   {
     $class = null;
     if(!is_file(__DIR__.$path.$classname.'.php'))
-    {
-      throw new MinimeException('Class not found!');
-    }
+    {      
+      throw new MinimeException('Class not found!');      
+    }    
     require_once __DIR__.$path.$classname.'.php';
 
     $classname = $namespace.$classname;

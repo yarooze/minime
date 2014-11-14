@@ -7,7 +7,7 @@ namespace App\Form;
  * @author jb
  *
  */
-class BaseForm
+class MinimeForm
 {
   protected $name = 'form_default';
 

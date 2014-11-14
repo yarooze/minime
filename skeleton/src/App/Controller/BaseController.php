@@ -1,11 +1,11 @@
 <?php
-namespace App\Security;
+namespace App\Controller;
 
 /**
  *
  * @author jb
  */
-Abstract Class BaseAuth
+Class BaseController extends MinimeController
 {
   /**
    * @var \App\Application
@@ -14,12 +14,6 @@ Abstract Class BaseAuth
 
   public function __construct(\App\Application $app)
   {
-    $this->app = $app;
+     parent::__construct($app);    
   }
-
-  /**
-   * @return bool
-   */
-  abstract public function isAuthenticated();
 }
-

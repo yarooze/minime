@@ -1,15 +1,6 @@
 {
     "name": "Yarooze/Minime",
     "license": "Public Domain",
-    "require": {
-        "yarooze/twittee": "dev-master"
-    },
-    "repositories": [
-      {
-        "type": "vcs",
-        "url": "https://github.com/yarooze/twittee"
-      }
-    ],
     "authors": [
         {
             "name": "Yarooze"

@@ -5,7 +5,7 @@ namespace App\Controller;
  *
  * @author jb
  */
-Class BaseController
+Class MinimeController
 {
   /**
    * @var \App\Application

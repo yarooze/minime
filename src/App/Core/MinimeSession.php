@@ -8,7 +8,7 @@ namespace App\Core;
  */
 use App\Exception\MinimeException;
 
-class Session
+class MinimeSession
 {
   /**
    * @var \App\Application

@@ -5,7 +5,7 @@ namespace App\Core;
  *
  * @author jb
  */
-Class Request
+Class MinimeRequest
 {
   /**
    * @var \App\Application

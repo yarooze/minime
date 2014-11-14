@@ -7,7 +7,7 @@ require_once __DIR__.'/BaseAuth.php';
  *
  * @author jb
  */
-Class SimpleAuth
+Class SimpleAuth extends BaseAuth
 {
   public function __construct(\App\Application $app)
   {

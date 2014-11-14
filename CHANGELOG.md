@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.9.0 2014-11-14
+
+- twittee is back in "core", but the whole minime framework is in "vendor" and can be updated with composer
+- session class
+
+
 ## v2.0.0 2014-10-27
 
 - twittee moved to separate repo and must be retrieved with composer now
