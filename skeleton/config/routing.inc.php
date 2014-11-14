@@ -50,6 +50,7 @@ return array(
       array('url'     => array(),
             'methods' => array(),
             'formats' => array(),
+            'controller' => 'DefaultController',
             'action'  => 'defaultAction',
       ),
   //

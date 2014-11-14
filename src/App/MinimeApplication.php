@@ -2,11 +2,13 @@
 namespace App;
 
 require_once __DIR__.'/Exception/MinimeException.php';
+require_once __DIR__.'/Exception/UnknownRouteException.php';
 //require_once __DIR__.'/../../vendor/autoload.php';
 //require_once __DIR__.'/../../../twittee/src/Twittee/Container.php';
 
 use App\Core\Container as Container,
-    App\Exception\MinimeException as MinimeException;
+    App\Exception\MinimeException as MinimeException,
+    App\Exception\UnknownRouteException as UnknownRouteException;
 
 /**
  *
@@ -14,7 +16,7 @@ use App\Core\Container as Container,
  *
  */
 class MinimeApplication extends Container
-{ 
+{
   public function run()
   {
     if(!$this->auth->isAuthenticated())
@@ -25,7 +27,7 @@ class MinimeApplication extends Container
     $route_name = $this->router->getCurrentRouteName();
     if($route_name == null)
     {
-      throw new MinimeException('Unknown route!');
+      throw new UnknownRouteException('Unknown route!');
     }
 
     $controller = $this->loadClass($this->router->getControllerName(), '\App\Controller\\', '/Controller/');
@@ -67,9 +69,9 @@ class MinimeApplication extends Container
   {
     $class = null;
     if(!is_file(__DIR__.$path.$classname.'.php'))
-    {      
-      throw new MinimeException('Class not found!');      
-    }    
+    {
+      throw new MinimeException('Class not found!');
+    }
     require_once __DIR__.$path.$classname.'.php';
 
     $classname = $namespace.$classname;

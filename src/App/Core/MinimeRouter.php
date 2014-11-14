@@ -193,11 +193,21 @@ Class MinimeRouter
     }
     $location = '';
     foreach($route['url'] as $urlPart) {
+      if(is_array($urlPart)) {
+        $urlPart = $params[$urlPart['name']];
+      }
       $location .= '/'. $urlPart;
     }
-    foreach($route['formats'] as $format) {
+
+    if(array_key_exists('format', $params)) {
+      $format = $params['format'];
       $location .= '.'. $format;
-      break;
+    }
+    if(!$format) {
+      foreach($route['formats'] as $format) {
+        $location .= '.'. $format;
+        break;
+      }
     }
 
     if(array_key_exists('query', $params)) {
