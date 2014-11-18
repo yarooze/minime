@@ -15,10 +15,17 @@ class MinimeSession
    */
   protected $app = null;
 
+  protected $id = null;
+
   public function __construct(\App\Application $app)
   {
     if (!isset($_SESSION)) {session_start();}
     $this->app = $app;
+    $this->id = session_id();
+  }
+
+  public function getSessionId() {
+    return $this->id;
   }
 
   /**

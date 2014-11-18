@@ -11,9 +11,16 @@ $app->cfg     = function ($app) use ($cfg) { return $cfg; };
 $config = $app->loadClass('Config', '\App\Core\\', '/Core/');
 $app->config  = function ($app) use ($config) { return $config; };
 
+$logger = $app->loadClass('Logger', '\App\Core\\', '/Core/');
+$app->logger  = function ($app) use ($logger) { return $logger; };
+$app->logger->setLogDir(__DIR__.'/../log');
+
 //we dont need this stuff for 'internal usage'
 if($app->config->get('env') != 'internal')
 {
+  $session = $app->loadClass('Session', '\App\Core\\', '/Core/');
+  $app->session  = function ($app) use ($session) { return $session; };
+
   $auth = $app->loadClass('SimpleAuth', '\App\Security\\', '/Security/');
   $app->auth = function ($app) use ($auth) { return $auth; };
 

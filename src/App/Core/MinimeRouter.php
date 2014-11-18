@@ -198,12 +198,11 @@ Class MinimeRouter
       }
       $location .= '/'. $urlPart;
     }
-
     if(array_key_exists('format', $params)) {
       $format = $params['format'];
       $location .= '.'. $format;
     }
-    if(!$format) {
+    if(!isset($format) || empty($format)) {
       foreach($route['formats'] as $format) {
         $location .= '.'. $format;
         break;
