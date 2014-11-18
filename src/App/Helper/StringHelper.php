@@ -62,3 +62,21 @@ if(!function_exists('fixUTF8Fields'))
     return $data;
   }
 }
+
+if(!function_exists('getAV'))
+{
+  /**
+   * clean way to get array value
+   *
+   * Returns the value of the array's member or standard value if the
+   * array key wasn't set
+   * @param  array $array
+   * @param  mixed(int/String) $key
+   * @param  mixed $standard (default null)
+   * @return mixed
+   */
+  function getAV(array $array, $key, $standard = null)
+  {
+    return key_exists($key, $array)?$array[$key]:$standard;
+  }
+}
