@@ -15,6 +15,9 @@ $logger = $app->loadClass('Logger', '\App\Core\\', '/Core/');
 $app->logger  = function ($app) use ($logger) { return $logger; };
 $app->logger->setLogDir(__DIR__.'/../log');
 
+$pdo = $app->loadClass('MinimePDO', '\App\Core\\', '/Core/');
+$app->db = function ($app) use ($pdo) { return $pdo; };
+
 //we dont need this stuff for 'internal usage'
 if($app->config->get('env') != 'internal')
 {

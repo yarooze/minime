@@ -7,6 +7,7 @@ require_once __DIR__.'/../../vendor/autoload.php';
 //require_once __DIR__.'/../../vendor/autoload.php';
 //require_once __DIR__.'/../../vendor/yarooze/twittee/src/Twittee/Container.php';
 
+use App\Exception\UnknownRouteException;
 use Twittee\Container as Container,
     App\Exception\MinimeException as MinimeException;
 
@@ -39,4 +40,21 @@ class Application extends MinimeApplication
 
     return $class;
   }
+
+    public function run()
+    {
+        try {
+
+            $this->router->checkRouteCredentials();
+
+            parent::run();
+
+        } catch (UnknownRouteException $e) {
+            if($this->config->get('env') === 'dev') {
+                throw new UnknownRouteException($e->getMessage(), $e->getCode(), $e);
+            } else {
+                $this->router->redirect('default',array());
+            }
+        }
+    }
 }
