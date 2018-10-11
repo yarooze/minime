@@ -47,7 +47,7 @@ class MinimeConfig
     }
     else
     {
-      throw new MinimeException('Unknown config parameter!');
+      throw new MinimeException('Unknown config parameter! ['. $name . ']');
     }
   }
 
