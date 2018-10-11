@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__.'/App/Application.php';
 
+require_once __DIR__.'/App/Helper/StringHelper.php';
+
 use App\Application as Application,
     App\Model\ExampleModel as ExampleModel;
 

@@ -7,6 +7,10 @@ namespace App\Security;
  */
 Abstract Class MinimeAuth
 {
+    const IS_AUTHENTICATED_FALSE        = 0;
+    const IS_AUTHENTICATED_ANONYMOUSLY  = 1;
+    const IS_AUTHENTICATED_FULLY        = 2;
+
   /**
    * @var \App\Application
    */

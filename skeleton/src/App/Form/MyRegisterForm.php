@@ -24,7 +24,7 @@ class MyRegisterForm extends BaseForm
   public function validate()
   {
     $data = $this->data;
-    $errs = array();
+    $errs = parent::validate();
     if(!isset($data['name']) || !preg_match("/^[a-zA-Z0-9\._-]{3,25}$/i", $data['name'])) {
       $errs['name'] = $this->getErrorMsg('name');
     }

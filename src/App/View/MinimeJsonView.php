@@ -7,7 +7,7 @@ require_once __DIR__.'/BaseView.php';
  *
  * @author jb
  */
-Class JsonView extends BaseView
+Class MinimeJsonView extends BaseView
 {
   protected $template_name = '/../Templates/Json.tpl.php';
 

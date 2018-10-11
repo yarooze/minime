@@ -9,6 +9,8 @@ namespace App\Form;
  */
 class MinimeForm
 {
+  protected $csrf_tocken;
+
   protected $name = 'form_default';
 
   protected $data = array();
@@ -16,6 +18,7 @@ class MinimeForm
 
   protected $errors = array(
         'default' => 'Error!',
+        'csrf_tocken' => 'csrf_forgery'
       );
 
   /**
@@ -34,7 +37,12 @@ class MinimeForm
    */
   public function validate()
   {
-    return array();
+    $err = array();
+    $data = $this->data;
+    if ($this->csrf_tocken && (!isset($data['csrf_tocken']) || $data['csrf_tocken'] !== $this->csrf_tocken )) {
+      $errs['csrf_tocken'] = $this->getErrorMsg('csrf_forgery');
+    }
+    return $err;
   }
 
   public function bind($data) {
@@ -58,4 +66,24 @@ class MinimeForm
   public function getValue($field) {
     return isset($this->data[$field]) ? $this->data[$field] : null;
   }
+
+    /**
+     *
+     * @return string
+     */
+    public function getFullFieldName($fieldName) {
+        return $this->name . '[' . $fieldName . ']';
+    }
+
+    public function generateCsrfTocken($globalTocken = '') {
+        $this->csrf_tocken = md5($this->getName() . $globalTocken);
+    }
+
+    public function getCsrfTocken() {
+        return $this->csrf_tocken;
+    }
+
+
+
+
 }
