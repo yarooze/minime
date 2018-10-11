@@ -9,6 +9,7 @@ Class MinimeUser
 {
   protected $id         = null;
   protected $authenticated = null;
+  protected $keepForever = 0;
   protected $credential = array();
   protected $user = null;
 
@@ -46,6 +47,22 @@ Class MinimeUser
   {
       $this->authenticated = $authenticated;
   }
+
+    /**
+     * @return int
+     */
+    public function getKeepForever()
+    {
+        return $this->keepForever;
+    }
+
+    /**
+     * @param int $keepForever
+     */
+    public function setKeepForever($keepForever)
+    {
+        $this->keepForever = $keepForever;
+    }
 
   /**
    *
