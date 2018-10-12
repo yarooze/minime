@@ -17,8 +17,13 @@ $logger = $app->loadClass('Logger', '\App\Core\\', '/Core/');
 $app->logger  = function ($app) use ($logger) { return $logger; };
 $app->logger->setLogDir(__DIR__.'/../log');
 
-$pdo = $app->loadClass('PDO', '\App\Core\\', '/Core/');
-$app->db = function ($app) use ($pdo) { return $pdo; };
+// add for data base
+//$pdo = $app->loadClass('PDO', '\App\Core\\', '/Core/');
+//$app->db = function ($app) use ($pdo) { return $pdo; };
+
+// add for i18n
+//$i18n = $app->loadClass('I18n', '\App\Core\\', '/Core/');
+//$app->i18n = function ($app) use ($i18n) { return $i18n; };
 
 //we dont need this stuff for 'internal usage'
 if($app->config->get('env') != 'internal')
