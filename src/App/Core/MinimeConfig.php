@@ -35,15 +35,15 @@ class MinimeConfig
    * @throws MinimeException
    * @return mixed
    */
-  public function get($name)
+  public function get($name, $default = null)
   {
     if(array_key_exists($name, $this->app->cfg))
     {
       return $this->app->cfg[$name];
     }
-    elseif(array_key_exists($name, $this->app->cfg))
+    elseif($default !== null)
     {
-      return $this->cfg[$name];
+      return $default;
     }
     else
     {
