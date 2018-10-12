@@ -11,12 +11,21 @@ class MinimeI18n
 
     protected $messages = array();
 
+    /**
+     * MinimeI18n constructor.
+     * @param Application $app
+     */
     public function __construct($app) {
         $this->app = $app;
         $this->root_dir = $app->config->get('APP_ROOT_DIR');
     }
 
-    public function trans($message) {
+    /**
+     * @param string $message
+     * @param array $params
+     * @return string
+     */
+    public function trans($message, $params = array()) {
         $this->locale = $this->app->config->get('locale', $this->locale);
         if (!array_key_exists($this->locale, $this->messages)) {
             $this->messages[$this->locale] = array();
@@ -25,6 +34,12 @@ class MinimeI18n
                 $this->messages[$this->locale] = require $filename;
             }
         }
-        return getAV($this->messages[$this->locale], $message, $message);
+
+        $message = getAV($this->messages[$this->locale], $message, $message);
+        foreach ($params as $key => $value) {
+            $message = str_replace($key, $value, $message);
+        }
+
+        return $message;
     }
 }
