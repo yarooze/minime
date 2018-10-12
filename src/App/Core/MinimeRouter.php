@@ -189,7 +189,7 @@ Class MinimeRouter
 
     $route = $this->getRouteByName($routeName);
     if($route == null) {
-      throw new MinimeException('Unknown route!');
+      throw new MinimeException('Unknown route ['.$routeName.']!');
     }
     $location = '';
     foreach($route['url'] as $urlPart) {
