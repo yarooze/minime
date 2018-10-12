@@ -128,6 +128,7 @@ abstract class BaseDBModel
      *                   'limit'     - default 100
      *                   'orderby'   - array(array('name' => 'NAME', 'order' => 'ASC|DESC'))
      *                   'all_pages' - returns last page number
+     *                   'all_rows'  - returns rows number
      * @return array
      */
     public function retriveCollection(&$params = array())
@@ -194,6 +195,7 @@ FROM `' . $this->tablename . '` AS ' . $this->alias . ' ';
         }
 
         $params['all_pages'] = $all_pages;
+        $params['all_rows'] = $all_rows_cnt;
 
         return $rows;
     }
