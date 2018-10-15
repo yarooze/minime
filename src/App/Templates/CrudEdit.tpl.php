@@ -2,7 +2,7 @@
 <div class="container">
     <?php $entity_id =  (int)$form->getValue('id'); ?>
     <form method="post" id="<?php echo $form->getName(); ?>" name="<?php echo $form->getName(); ?>"
-          action="<?php echo $app->router->getUrl($routeEdit, array('id' => $entity_id)); ?>" >
+          action="<?php echo $app->router->getUrl($route_edit, array('id' => $entity_id)); ?>" >
 
         <?php if($errs):?>
             <div class="form-group">
@@ -17,7 +17,7 @@
             </div>
         <?php endif;?>
 
-        <?php foreach (fields as $field): ?>
+        <?php foreach ($fields as $field): ?>
 
         <div class="form-group row">
             <label for="<?php $view->printString($field); ?>" class="col-sm-2 col-form-label"><?php $view->printString($field); ?></label>
@@ -33,15 +33,3 @@
         <button type="submit" class="btn btn-primary"><?php $i18n->trans('SAVE'); ?></button>
     </form>
 </div>
-
-<?php
-/*
- array(
-            'page_name' => $i18n->trans('EDIT_ENTITY_ID', array('%ENTITY_ID%' => $entity_id)),
-            'form' => $form,
-            'errs' => $errs,
-            'fields' => $this->fieldsEdit,
-            'template_name' => $this->templateEdit,
-            'page_name' => $this->pageNameEdit,
-)
- */

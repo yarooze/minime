@@ -106,6 +106,10 @@ Class MinimeRouter
      */
     public function routePartsMatch($url_parts, $routing_url_params)
     {
+        if (count($url_parts) !== count($routing_url_params)) {
+            return false;
+        }
+
         $matched = ($url_parts == $routing_url_params);
         $params = array();
 

@@ -70,7 +70,7 @@ class MinimeApplication extends Container
     $class = null;
     if(!is_file(__DIR__.$path.$classname.'.php'))
     {
-      throw new MinimeException('Class not found!');
+        throw new MinimeException('Class ['.$namespace.''.$classname.' in '.$path.'] not found!');
     }
     require_once __DIR__.$path.$classname.'.php';
 

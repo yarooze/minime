@@ -61,7 +61,7 @@ Abstract Class MinimeCrudController extends BaseController
     }
 
     public function editAction () {
-        $view = new $this->formNameEdit($this->app);
+        $view = new $this->viewNameEdit($this->app);
         $entity_id = $this->app->request->getParameter('id', 0);
         $db = $this->app->db;
         $method = $this->app->request->getMethod();
@@ -73,8 +73,10 @@ Abstract Class MinimeCrudController extends BaseController
 
         if ($method === 'get') {
             $model = new $this->modelName(array(), $db);
-            $entityData = $model->retrieveById($entity_id);
-            if (!$entityData) {
+            if ($entity_id > 0) {
+                $entityData = $model->retrieveById($entity_id);
+            }
+            if ($entity_id > 0 && !$entityData) {
                 $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
                 $this->app->router->redirect($this->routeList, array());
             }
@@ -121,6 +123,9 @@ Abstract Class MinimeCrudController extends BaseController
             'fields' => $this->fieldsEdit,
             'template_name' => $this->templateEdit,
             'page_name' => $this->pageNameEdit,
+            'route_list' => $this->routeList,
+            'route_edit' => $this->routeEdit,
+            'route_delete' => $this->routeDelete,
         ));
     }
 
