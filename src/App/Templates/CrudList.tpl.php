@@ -7,7 +7,8 @@
                 <th scope="col"><?php $view->printString($fieldName); ?></th>
             <?php endforeach ?>
             <th>
-                <a href="<?php echo $app->router->getUrl($route_edit, array('id' => 0)); ?>"><?php echo $i18n->trans('NEW_ENTITY'); ?></th>
+                <a class="btn btn-primary"
+                   href="<?php echo $app->router->getUrl($route_edit, array('id' => 0)); ?>"><?php echo $i18n->trans('NEW_ENTITY'); ?></th>
             </th>
             <th></th>
         </tr>

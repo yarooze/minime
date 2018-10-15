@@ -104,7 +104,7 @@ Abstract Class MinimeCrudController extends BaseController
                     }
                 }
 
-                foreach ($this->fieldsEdit as $fieldName) {
+                foreach ($this->fieldsEdit as $fieldName => $fieldData) {
                     $entityData[$fieldName] = $formData[$fieldName];
                 }
                 $model->setFieldsFromArray($entityData);

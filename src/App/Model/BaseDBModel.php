@@ -139,6 +139,8 @@ abstract class BaseDBModel
         $limit_2 = (isset($params['limit']) && $params['limit'] > 0) ? (int)$params['limit'] : 100;
         $limit_1 = ($page) ? (($page - 1) * $limit_2) : 0;
 
+        $q_group_by_id = ' GROUP BY ' . $this->alias . '.' . $this->id_field . ' ';
+
         $order = (isset($params['orderby']) && !empty($params['orderby'])) ?
             $params['orderby'] :
             array(array('name' => ' ' . $this->id_field, 'order' => 'DESC'));
@@ -170,6 +172,7 @@ abstract class BaseDBModel
  FROM `' . $this->tablename . '` AS ' . $this->alias . ' ';
         $q .= $this->joinQuery();
         $q .= $q_where;
+        $q .= $q_group_by_id;
         $q .= $q_order;
         $q .= ' LIMIT ' . $limit_1 . ',' . $limit_2 . ';';
 
