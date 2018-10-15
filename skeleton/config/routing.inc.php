@@ -12,6 +12,8 @@
  *       'methods'    => array('post','get','put'), // allowed methods (all if empty)
  *       'controller' => 'myCoolController',        // controller name
  *       'action'     => 'myCoolAction',           // action mane
+ *       'credentials'     => array(),           // route credentials:
+ *       // empry - blocked, '*' - free, 'NAME' - must have (e.g. 'ADMIN', 'USER', 'AUTHENTICATED_FULLY', or whatever)
  *     ),
  * )
  */
@@ -22,6 +24,7 @@ return array(
             'methods' => array('get'),
             'formats' => array(),
             'action'  => 'defaultAction',
+            'credentials'     => array('AUTHENTICATED_FULLY'),
       ),
   //
       'MyRegister' =>
@@ -30,6 +33,7 @@ return array(
           'formats'    => array('html'),
           'controller' => 'DefaultController',
           'action'     => 'defaultAction',
+          'credentials'     => array('*'),
       ),
       'MyRegisterSubmit' =>
       array('url'        => array('register','submit'),
@@ -37,6 +41,7 @@ return array(
           'formats'    => array('html'),
           'controller' => 'DefaultController',
           'action'     => 'mySubmitAction',
+          'credentials'     => array('*'),
       ),
       'MyRegisterSuccess' =>
       array('url'        => array('register','success'),
@@ -44,6 +49,7 @@ return array(
           'formats'    => array('html'),
           'controller' => 'DefaultController',
           'action'     => 'myRegisterSuccessAction',
+          'credentials'     => array('*'),
       ),
   //
       'default' =>
@@ -52,6 +58,7 @@ return array(
             'formats' => array(),
             'controller' => 'DefaultController',
             'action'  => 'defaultAction',
+            'credentials'     => array('*'),
       ),
   //
 );

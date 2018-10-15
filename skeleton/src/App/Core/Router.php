@@ -12,21 +12,25 @@ Class Router extends MinimeRouter
 {
     public function checkRouteCredentials() {
 // Example code.
-//        $freeRoutes = array('login', 'logout', 'default');
-//        $adminRoutes = array('userList', 'userEdit', 'userDelete');
-//
-//        $whitelist = array_merge($freeRoutes, $adminRoutes);
+//        $routeCredentials = $this->getRouteCredentials();
+//        $isFreeRoute = $this->isFreeRoute();
 //
 //        $route_name = $this->getCurrentRouteName();
-//        if (!in_array($route_name, $whitelist)) {
+//        // Every route must have credentials or it is blocked
+//        if (empty($routeCredentials)) {
 //            if($this->app->config->get('env') === 'dev') {
-//                throw new UnknownRouteException('The route is not in the whitelist');
+//                throw new UnknownRouteException('The credentials for the route ['.$route_name.'] is not defined!');
 //            } else {
 //                $this->redirect('logout', array());
 //            }
 //        }
 //
-//        if (!in_array($route_name, $freeRoutes) && !$this->app->auth->isAuthenticated(SimpleAuth::IS_AUTHENTICATED_FULLY)) {
+//        if ($isFreeRoute) {
+//            return;
+//        }
+//
+//        // Block not authenticated fully users for the 'not free' routes
+//        if (!$this->app->auth->isAuthenticated(SimpleAuth::IS_AUTHENTICATED_FULLY)) {
 //            if($this->app->config->get('env') === 'dev') {
 //                throw new MinimeException("Not fully authenticated!");
 //            } else {
@@ -35,11 +39,13 @@ Class Router extends MinimeRouter
 //        }
 //
 //        $user = $this->app->session->get('user');
-//        if (in_array($route_name, $adminRoutes) && !$user->hasCredential('ADMIN_CLIENT')) {
-//            if($this->app->config->get('env') === 'dev') {
-//                throw new MinimeException("Not enough credentials! Must be admin.");
-//            } else {
-//                $this->redirect('default', array());
+//        foreach ($routeCredentials as $routeCredential) {
+//            if (!$user->hasCredential($routeCredential)) {
+//                if($this->app->config->get('env') === 'dev') {
+//                    throw new MinimeException('This user has not enough credentials ['.$routeCredential.']!');
+//                } else {
+//                    $this->redirect('default', array());
+//                }
 //            }
 //        }
     }
