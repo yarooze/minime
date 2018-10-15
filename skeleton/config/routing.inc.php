@@ -51,6 +51,31 @@ return array(
           'action'     => 'myRegisterSuccessAction',
           'credentials'     => array('*'),
       ),
+  // CRUD
+//    '{crud}List' =>
+//        array('url' => array('{crud}'),
+//            'methods' => array("get"),
+//            'formats' => array('html'),
+//            'controller' => '{crud}Controller',
+//            'action' => 'listAction',
+//            'credentials'     => array('AUTHENTICATED_FULLY'),
+//        ),
+//    '{crud}Edit' =>
+//        array('url' => array('{crud}', array('name' => 'id', 'regexp' => '\d+')),
+//            'methods' => array("get", "post"),
+//            'formats' => array('html'),
+//            'controller' => '{crud}Controller',
+//            'action' => 'editAction',
+//            'credentials'     => array('AUTHENTICATED_FULLY'),
+//        ),
+//    '{crud}Delete' =>
+//        array('url' => array('{crud}', 'delete', array('name' => 'id', 'regexp' => '\d+')),
+//            'methods' => array("post"),
+//            'formats' => array('html'),
+//            'controller' => '{crud}Controller',
+//            'action' => 'deleteAction',
+//            'credentials'     => array('AUTHENTICATED_FULLY'),
+//        ),
   //
       'default' =>
       array('url'     => array(),

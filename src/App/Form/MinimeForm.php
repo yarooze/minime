@@ -21,11 +21,33 @@ class MinimeForm
         'csrf_tocken' => 'csrf_forgery'
       );
 
-  /**
+  protected $fields = array (
+      /* put your custom stuff here e.g.
+       'id' => array(
+        'type' => 'number'
+      )
+      */
+  );
+
+  public function __construct($param = array())
+  {
+      if (isset($param['form_name'])) {
+          $this->name  = $param['form_name'];
+      }
+      if (isset($param['form_errors'])) {
+          $this->errors  = $param['form_errors'];
+      }
+      if (isset($param['form_fields'])) {
+          $this->fields  = $param['form_fields'];
+      }
+  }
+
+    /**
    *
    * @return string
    */
-  public function getName() {
+  public function getName()
+  {
     return $this->name;
   }
 
