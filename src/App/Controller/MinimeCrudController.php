@@ -33,6 +33,7 @@ Abstract Class MinimeCrudController extends BaseController
     protected $routeEdit = '{crud}Edit';
     protected $routeDelete = '{crud}Delete';
 
+    // array(fieldname => array(),..)
     protected $fieldsEdit = array();
     protected $fieldsList = array();
 

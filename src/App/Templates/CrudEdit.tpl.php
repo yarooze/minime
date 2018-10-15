@@ -17,19 +17,19 @@
             </div>
         <?php endif;?>
 
-        <?php foreach ($fields as $field): ?>
+        <?php foreach ($fields as $fieldName => $fieldData): ?>
 
         <div class="form-group row">
-            <label for="<?php $view->printString($field); ?>" class="col-sm-2 col-form-label"><?php $view->printString($field); ?></label>
+            <label for="<?php $view->printString($fieldName); ?>" class="col-sm-2 col-form-label"><?php $view->printString($fieldName); ?></label>
             <div class="col-sm-10">
                 <input type="text" class="form-control"
-                       name="<?php echo $form->getFullFieldName($field); ?>"
-                       value="<?php $view->printString($form->getValue($field)); ?>">
+                       name="<?php echo $form->getFullFieldName($fieldName); ?>"
+                       value="<?php $view->printString($form->getValue($fieldName)); ?>">
             </div>
         </div>
         <?php endforeach; ?>
         <input name="<?php echo $form->getFullFieldName('csrf_tocken'); ?>"
                value="<?php $view->printString($form->getCsrfTocken()); ?>" type="hidden" />
-        <button type="submit" class="btn btn-primary"><?php $i18n->trans('SAVE'); ?></button>
+        <button type="submit" class="btn btn-primary"><?php echo $i18n->trans('SAVE_ENTITY'); ?></button>
     </form>
 </div>

@@ -3,11 +3,11 @@
     <table class="table">
         <thead>
         <tr>
-            <?php foreach ($fields as $field): ?>
-                <th scope="col"><?php $view->printString($field); ?></th>
+            <?php foreach ($fields as $fieldName => $fieldData): ?>
+                <th scope="col"><?php $view->printString($fieldName); ?></th>
             <?php endforeach ?>
             <th>
-                <a href="<?php echo $app->router->getUrl($route_edit, array('id' => 0)); ?>">+</th>
+                <a href="<?php echo $app->router->getUrl($route_edit, array('id' => 0)); ?>"><?php echo $i18n->trans('NEW_ENTITY'); ?></th>
             </th>
             <th></th>
         </tr>
@@ -15,8 +15,8 @@
         <tbody>
         <?php foreach ($collection as $entity): ?>
         <tr>
-            <?php foreach ($fields as $field): ?>
-                <td data-column="<?php $view->printString($field); ?>"><?php $view->printString($entity[$field]); ?></td>
+            <?php foreach ($fields as $fieldName => $fieldData): ?>
+                <td data-column="<?php $view->printString($fieldName); ?>"><?php $view->printString($entity[$fieldName]); ?></td>
             <?php endforeach; ?>
             <td data-column="edit">
                 <a class="btn btn-success"
@@ -28,7 +28,7 @@
                     <input name="<?php echo $deleteForm->getFullFieldName('csrf_tocken'); ?>"
                            value="<?php $view->printString($deleteForm->getCsrfTocken()); ?>" type="hidden" />
                     <input class="btn btn-danger" name="action" value="<?php echo $i18n->trans('DELETE'); ?>"
-                           onclick="return confirm('<?php echo $i18n->trans('CONFIRM_USER_DELETE'); ?>');" type="submit">
+                           onclick="return confirm('<?php echo $i18n->trans('CONFIRM_DELETE'); ?>');" type="submit">
                 </form>
             </td>
             <?php endforeach;  ?>
