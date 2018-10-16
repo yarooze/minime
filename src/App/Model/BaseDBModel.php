@@ -146,7 +146,7 @@ abstract class BaseDBModel
 
         $order = (isset($params['orderby']) && !empty($params['orderby'])) ?
             $params['orderby'] :
-            array(array('name' => ' ' . $this->id_field, 'order' => 'DESC'));
+            array(array('name' => '' . $this->id_field, 'order' => 'DESC'));
 
         $all_pages = 0;
 
@@ -165,14 +165,14 @@ abstract class BaseDBModel
 
         $q_group = '';
         foreach ($group as $key => $field) {
-            $q_group .= (empty($q_order)) ? ' GROUP BY ' : ' , ';
-            $q_group .= $this->getDb()->quote($field) . ' ';
+            $q_group .= (empty($q_group)) ? ' GROUP BY ' : ' , ';
+            $q_group .= str_replace("'", '`', $this->getDb()->quote($field)) . ' ';
         }
 
         $q_order = '';
         foreach ($order as $key => $field) {
             $q_order .= (empty($q_order)) ? ' ORDER BY ' : ' , ';
-            $q_order .= $this->getDb()->quote($field['name']);
+            $q_order .= str_replace("'", '`', $this->getDb()->quote($field['name']));
             $q_order .= (strtoupper($field['order']) === 'DESC') ? ' DESC ' : ' ASC ';
         }
 
