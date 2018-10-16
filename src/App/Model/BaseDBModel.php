@@ -127,6 +127,7 @@ abstract class BaseDBModel
      *                   'page'      - default 1
      *                   'limit'     - default 100
      *                   'orderby'   - array(array('name' => 'NAME', 'order' => 'ASC|DESC'))
+     *                   'groupby'   - array('name1', 'name2',..)
      *                   'all_pages' - returns last page number
      *                   'all_rows'  - returns rows number
      * @return array
@@ -139,7 +140,9 @@ abstract class BaseDBModel
         $limit_2 = (isset($params['limit']) && $params['limit'] > 0) ? (int)$params['limit'] : 100;
         $limit_1 = ($page) ? (($page - 1) * $limit_2) : 0;
 
-        $q_group_by_id = ' GROUP BY ' . $this->alias . '.' . $this->id_field . ' ';
+        $group = (isset($params['groupby']) && !empty($params['groupby'])) ?
+            $params['groupby'] :
+            array();
 
         $order = (isset($params['orderby']) && !empty($params['orderby'])) ?
             $params['orderby'] :
@@ -160,10 +163,16 @@ abstract class BaseDBModel
             $q_where = ' WHERE ' . $q_where;
         }
 
+        $q_group = '';
+        foreach ($group as $key => $field) {
+            $q_group .= (empty($q_order)) ? ' GROUP BY ' : ' , ';
+            $q_group .= $this->getDb()->quote($field) . ' ';
+        }
+
         $q_order = '';
         foreach ($order as $key => $field) {
             $q_order .= (empty($q_order)) ? ' ORDER BY ' : ' , ';
-            $q_order .= $field['name'];
+            $q_order .= $this->getDb()->quote($field['name']);
             $q_order .= (strtoupper($field['order']) === 'DESC') ? ' DESC ' : ' ASC ';
         }
 
@@ -172,7 +181,7 @@ abstract class BaseDBModel
  FROM `' . $this->tablename . '` AS ' . $this->alias . ' ';
         $q .= $this->joinQuery();
         $q .= $q_where;
-        $q .= $q_group_by_id;
+        $q .= $q_group;
         $q .= $q_order;
         $q .= ' LIMIT ' . $limit_1 . ',' . $limit_2 . ';';
 
@@ -180,7 +189,7 @@ abstract class BaseDBModel
         $q_cnt = 'SELECT
 count(*) AS cnt
 FROM `' . $this->tablename . '` AS ' . $this->alias . ' ';
-        $q_cnt .= $q_where . ';';
+        $q_cnt .= $q_where . $q_group . ';';
 
         $stmt = $this->getDb()->prepareStatement($q_cnt);
         $all_rows_cnt = 0;
