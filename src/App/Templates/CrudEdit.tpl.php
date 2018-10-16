@@ -8,8 +8,8 @@
             <div class="form-group">
                 <?php foreach($errs as $err): ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong><?php echo $i18n->trans('ERROR'); ?></strong> <?php $i18n->trans($err); ?>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="<?php $i18n->trans('CLOSE'); ?>">
+                        <strong><?php echo $i18n->trans('ERROR'); ?></strong> <?php echo $i18n->trans($err); ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="<?php echo $i18n->trans('CLOSE'); ?>">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>

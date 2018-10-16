@@ -123,7 +123,9 @@ abstract class BaseDBModel
      * retrieves multiple data rows
      *
      * @param &array   $params
-     *                   'filter' => array('FIELD_MAME' => 'FIELD_VALUE') OR retrieve all
+     *                   'filter' => array('FIELD_MAME' => 'FIELD_VALUE') OR
+     *                               array('FIELD_MAME' => array('FIELD_VALUE_1', 'FIELD_VALUE_2')) OR
+     *                                   retrieve all
      *                   'page'      - default 1
      *                   'limit'     - default 100
      *                   'orderby'   - array(array('name' => 'NAME', 'order' => 'ASC|DESC'))
@@ -154,9 +156,21 @@ abstract class BaseDBModel
         $q_where = '';
         if (is_array($filter)) {
             foreach ($filter as $r_name => $r_value) {
-                $args[':' . $r_name] = $r_value;
-                $q_where = (empty($q_where)) ? '' : ' AND ';
-                $q_where .= ' ' . $this->alias . '.' . $r_name . ' = :' . $r_name . ' ';
+                $q_where .= (empty($q_where)) ? '' : ' AND ';
+                if (is_array($r_value)) {
+                    $q_where .= ' ' . $this->alias . '.' . $r_name . ' IN ( ';
+                    foreach ($r_value as $in_key => $in_value) {
+                        $args[':' . $r_name . '_' . $in_key] = $in_value;
+                        if ($in_key > 0) {
+                            $q_where .= ' , ';
+                        }
+                        $q_where .= ' :' . $r_name . '_' . $in_key . ' ';
+                    }
+                    $q_where .= ' ) ';
+                } else {
+                    $args[':' . $r_name] = $r_value;
+                    $q_where .= ' ' . $this->alias . '.' . $r_name . ' = :' . $r_name . ' ';
+                }
             }
         }
         if ($q_where) {
