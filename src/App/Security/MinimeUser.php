@@ -8,7 +8,17 @@ namespace App\Security;
 Class MinimeUser
 {
   protected $id         = null;
+    /**
+     * @var authentication level
+     */
   protected $authenticated = null;
+    /**
+     * @var timestamp of the athentication
+     */
+  protected $authenticatedAt = null;
+    /**
+     * @var 0|1 - to logaout after some time or not
+     */
   protected $keepForever = 0;
   protected $credential = array();
   protected $user = null;
@@ -47,6 +57,22 @@ Class MinimeUser
   {
       $this->authenticated = $authenticated;
   }
+
+    /**
+     * @return timestamp
+     */
+    public function getAuthenticatedAt()
+    {
+        return $this->authenticatedAt;
+    }
+
+    /**
+     * @param timestamp $authenticatedAt
+     */
+    public function setAuthenticatedAt($authenticatedAt)
+    {
+        $this->authenticatedAt = $authenticatedAt;
+    }
 
     /**
      * @return int
