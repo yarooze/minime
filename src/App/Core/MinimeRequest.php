@@ -28,6 +28,12 @@ Class MinimeRequest
   protected $current_format = null;
 
   /**
+   * 'http' or 'https'
+   * @var null|string
+   */
+  protected $request_scheme = null;
+
+  /**
    * request parameters
    * @var array
    */
@@ -40,6 +46,14 @@ Class MinimeRequest
     $this->method     = strtolower($_SERVER['REQUEST_METHOD']);
     $this->remoteHost = key_exists('REMOTE_ADDR', $_SERVER) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
     $this->parameters = $_REQUEST;
+
+    if ((!empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https') ||
+          (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ||
+          (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')) {
+        $this->request_scheme = 'https';
+    } else {
+        $this->request_scheme = 'http';
+    }
 
     //set in Router::matchRoute()
     //$this->findFormat();
@@ -138,4 +152,12 @@ Class MinimeRequest
   {
     return $this->parameters;
   }
+
+    /**
+     * @return string
+     */
+    public function getRequestScheme()
+    {
+        return $this->request_scheme;
+    }
 }
