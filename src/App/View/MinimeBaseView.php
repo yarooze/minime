@@ -65,6 +65,13 @@ Abstract Class MinimeBaseView
     }
 
     /**
+     * Call it with parent:: to get parent templates
+     */
+    public function getTemplateDir () {
+        return __DIR__.'/../Templates/';
+    }
+
+    /**
      * @param string $string
      * @param boool  $raw
      */

@@ -8,6 +8,13 @@ namespace App\View;
 Abstract Class BaseView extends MinimeBaseView
 {
     /**
+     * Call it with parent:: to get parent templates
+     */
+    public function getTemplateDir () {
+        return __DIR__.'/../Templates/';
+    }
+
+    /**
      * renders the partial
      *
      * @param string $partial - partial's name (without "_")
@@ -17,7 +24,13 @@ Abstract Class BaseView extends MinimeBaseView
         $app = $this->app;
         $view = $this;
         extract($params);
-        include __DIR__.'/../Templates/_'.$partial.'.tpl.php';
+
+        $templateDir = $this->getTemplateDir();
+        if (!file_exists ($templateDir . '_'.$partial.'.tpl.php')) {
+            $templateDir = parent::getTemplateDir();
+        }
+        include $templateDir . '_'.$partial.'.tpl.php';
+//        include __DIR__.'/../Templates/_'.$partial.'.tpl.php';
     }
 
     /**
