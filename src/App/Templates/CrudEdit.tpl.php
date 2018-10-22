@@ -15,19 +15,11 @@
                     </div>
                 <?php endforeach; ?>
             </div>
-        <?php endif;?>
-
-        <?php foreach ($fields as $fieldName => $fieldData): ?>
-
-        <div class="form-group row">
-            <label for="<?php $view->printString($fieldName); ?>" class="col-sm-2 col-form-label"><?php $view->printString($fieldName); ?></label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control"
-                       name="<?php echo $form->getFullFieldName($fieldName); ?>"
-                       value="<?php $view->printString($form->getValue($fieldName)); ?>">
-            </div>
-        </div>
-        <?php endforeach; ?>
+        <?php endif; ?>
+        <?php foreach ($fields as $fieldName => $fieldData) {
+            $partialName = isset($fieldData['partial']) ? $fieldData['partial'] : 'crudEditField';
+            $view->renderPartial($partialName, array('fieldName' => $fieldName, 'form' => $form, 'fieldData' => $fieldData));
+        } ?>
         <input name="<?php echo $form->getFullFieldName('csrf_tocken'); ?>"
                value="<?php $view->printString($form->getCsrfTocken()); ?>" type="hidden" />
         <button type="submit" class="btn btn-primary"><?php echo $i18n->trans('SAVE_ENTITY'); ?></button>

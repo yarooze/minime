@@ -16,9 +16,10 @@
         <tbody>
         <?php foreach ($collection as $entity): ?>
         <tr>
-            <?php foreach ($fields as $fieldName => $fieldData): ?>
-                <td data-column="<?php $view->printString($fieldName); ?>"><?php $view->printString($entity[$fieldName]); ?></td>
-            <?php endforeach; ?>
+            <?php foreach ($fields as $fieldName => $fieldData) {
+                $partialName = isset($fieldData['partial']) ? $fieldData['partial'] : 'crudListField';
+                $view->renderPartial($partialName, array('fieldName' => $fieldName, 'entity' => $entity, 'fieldData' => $fieldData));
+            } ?>
             <td data-column="edit">
                 <a class="btn btn-success"
                    href="<?php echo $app->router->getUrl($route_edit, array('id' => $entity['id'])); ?>"><?php echo $i18n->trans('EDIT'); ?></a></td>

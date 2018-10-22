@@ -1,0 +1,1 @@
+<td data-column="<?php $view->printString($fieldName); ?>"><?php $view->printString($entity[$fieldName]); ?></td>
