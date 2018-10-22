@@ -37,6 +37,8 @@ Abstract Class MinimeCrudController extends BaseController
     protected $fieldsEdit = array();
     protected $fieldsList = array();
 
+    protected $pagerLimit = 50;
+
     public function listAction()
     {
         $view = new $this->viewNameList($this->app);
@@ -48,7 +50,7 @@ Abstract Class MinimeCrudController extends BaseController
 
         $params = array(
             'page'  => $this->app->request->getParameter('page', 1),
-            'limit'  => $this->app->request->getParameter('limit', 5),
+            'limit'  => $this->app->request->getParameter('limit', $this->pagerLimit),
         );
         $collection = $model->retriveCollection($params);
 
