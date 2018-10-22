@@ -46,7 +46,10 @@ Abstract Class MinimeCrudController extends BaseController
         $db = $this->app->db;
         $model = new $this->modelName(array(), $db);
 
-        $params = array();
+        $params = array(
+            'page'  => $this->app->request->getParameter('page', 1),
+            'limit'  => $this->app->request->getParameter('limit', 5),
+        );
         $collection = $model->retriveCollection($params);
 
         $view->render(array(
@@ -58,6 +61,7 @@ Abstract Class MinimeCrudController extends BaseController
             'route_list' => $this->routeList,
             'route_edit' => $this->routeEdit,
             'route_delete' => $this->routeDelete,
+            'pager' => $params,
         ));
     }
 
