@@ -1,5 +1,9 @@
 <?php $i18n = $this->app->i18n; ?>
 <div class="container">
+    <div>
+        <a class="nav-link" href="<?php echo $app->router->getUrl($route_list); ?>"><?php echo $i18n->trans('LIST_VIEW'); ?></a>
+    </div>
+
     <?php $entity_id =  (int)$form->getValue('id'); ?>
     <form method="post" id="<?php echo $form->getName(); ?>" name="<?php echo $form->getName(); ?>"
           action="<?php echo $app->router->getUrl($route_edit, array('id' => $entity_id)); ?>" >
