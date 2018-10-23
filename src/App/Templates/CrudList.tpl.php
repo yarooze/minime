@@ -7,7 +7,7 @@
                 <th scope="col"><?php $view->printString($fieldName); ?></th>
             <?php endforeach ?>
             <th>
-                <?php if (!in_array('CREATE', $this->actions)): ?>
+                <?php if (!in_array('CREATE', $actions)): ?>
                 <a class="btn btn-primary"
                    href="<?php echo $app->router->getUrl($route_edit, array('id' => 0)); ?>"><?php echo $i18n->trans('NEW_ENTITY'); ?>
                 <?php endif; ?>
@@ -23,13 +23,13 @@
                 $view->renderPartial($partialName, array('fieldName' => $fieldName, 'entity' => $entity, 'fieldData' => $fieldData));
             } ?>
             <td data-column="edit">
-                <?php if (!in_array('EDIT', $this->actions)): ?>
+                <?php if (!in_array('EDIT', $actions)): ?>
                 <a class="btn btn-success"
                    href="<?php echo $app->router->getUrl($route_edit, array('id' => $entity['id'])); ?>"><?php echo $i18n->trans('EDIT'); ?></a>
                 <?php endif; ?>
             </td>
             <td data-column="delete">
-                <?php if (!in_array('DELETE', $this->actions)): ?>
+                <?php if (!in_array('DELETE', $actions)): ?>
                 <form name="<?php echo $deleteForm->getName(); ?>" method="post"
                       action="<?php echo $app->router->getUrl($route_delete, array('id' => $entity['id'])); ?>">
                     <input name="<?php echo $deleteForm->getFullFieldName('csrf_tocken'); ?>"
