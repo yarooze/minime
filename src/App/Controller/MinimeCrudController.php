@@ -95,7 +95,7 @@ Abstract Class MinimeCrudController extends BaseController
             $errs = $form->getErrors();
             //no errors - save
             if(empty($errs)) {
-                if ($entity_id > 0 && $entity_id !== $formData['id']) {
+                if ($entity_id > 0 && $entity_id !== $form->getValue('id')) {
                     $flasher->add($i18n->trans('ROUTE_DOESNT_MATCH_ENTITY', array('%ENTITY_ID%' => $entity_id, '%FORM_ENTITY_ID%' =>  $formData['id'])),
                         Flasher::LVL_ALERT);
                     $this->app->router->redirect($this->routeList, array());
@@ -111,7 +111,7 @@ Abstract Class MinimeCrudController extends BaseController
                 }
 
                 foreach ($this->fieldsEdit as $fieldName => $fieldData) {
-                    $entityData[$fieldName] = $formData[$fieldName];
+                    $entityData[$fieldName] = $form->getValue($fieldName);
                 }
                 $model->setFieldsFromArray($entityData);
 
