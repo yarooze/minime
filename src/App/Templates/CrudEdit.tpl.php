@@ -22,7 +22,7 @@
         <?php endif; ?>
         <?php foreach ($fields as $fieldName => $fieldData) {
             $partialName = isset($fieldData['partial']) ? $fieldData['partial'] : 'crudEditField';
-            $view->renderPartial($partialName, array('fieldName' => $fieldName, 'form' => $form, 'fieldData' => $fieldData, 'err' => $err));
+            $view->renderPartial($partialName, array('fieldName' => $fieldName, 'form' => $form, 'fieldData' => $fieldData, 'errs' => $errs));
         } ?>
         <input name="<?php echo $form->getFullFieldName('csrf_tocken'); ?>"
                value="<?php $view->printString($form->getCsrfTocken()); ?>" type="hidden" />
