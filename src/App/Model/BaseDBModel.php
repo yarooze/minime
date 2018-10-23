@@ -97,7 +97,7 @@ abstract class BaseDBModel
     protected function getIdAsIdQueryPart() {
         $id_as_id = '';
         if ($this->id_field !== 'id') {
-            $id_as_id = ' ' . $this->alias . '.' . $this->id_field . ' AS ' . $this->alias . '.id, ';
+            $id_as_id = ' ' . $this->alias . '.' . $this->id_field . ' AS id, ';
         }
         return $id_as_id;
     }
