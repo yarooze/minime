@@ -3,6 +3,8 @@
 namespace App\Core;
 
 use App\Exception\MinimeException;
+use App\Exception\UnknownRouteException;
+use App\Security\MinimeAuth;
 
 /**
  *
@@ -255,7 +257,7 @@ Class MinimeRouter
         }
 
         // Block not authenticated fully users for the 'not free' routes
-        if (!$this->app->auth->isAuthenticated(SimpleAuth::IS_AUTHENTICATED_FULLY)) {
+        if (!$this->app->auth->isAuthenticated(MinimeAuth::IS_AUTHENTICATED_FULLY)) {
             if($this->app->config->get('env') === 'dev') {
                 throw new MinimeException("Not fully authenticated!");
             } else {
