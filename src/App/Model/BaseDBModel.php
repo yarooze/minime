@@ -94,6 +94,14 @@ abstract class BaseDBModel
         return '';
     }
 
+    protected function getIdAsIdQueryPart() {
+        $id_as_id = '';
+        if ($this->id_field !== 'id') {
+            $id_as_id = ' ' . $this->alias . '.' . $this->id_field . ' AS ' . $this->alias . '.id, ';
+        }
+        return $id_as_id;
+    }
+
     /**
      * saves MemberConveration into data base (inserts, if new or updates, if exists)
      * @param bool $testCompulsoryFields - test if compulsory fields set, before try to save data
@@ -191,6 +199,7 @@ abstract class BaseDBModel
         }
 
         $q = 'SELECT
+ ' . $this->getIdAsIdQueryPart() . '        
  ' . $this->alias . '.* ' . $this->joinFields() . '
  FROM `' . $this->tablename . '` AS ' . $this->alias . ' ';
         $q .= $this->joinQuery();
@@ -235,7 +244,9 @@ FROM `' . $this->tablename . '` AS ' . $this->alias . ' ';
     public function retrieveById($id)
     {
         $data = null;
+
         $q = 'SELECT
+          ' . $this->getIdAsIdQueryPart() . '
           ' . $this->alias . '.* ' . $this->joinFields() . '
           FROM `' . $this->tablename . '` AS ' . $this->alias . '
           ' . $this->joinQuery() . '
@@ -258,6 +269,7 @@ FROM `' . $this->tablename . '` AS ' . $this->alias . ' ';
     {
         $data = null;
         $q = 'SELECT
+          ' . $this->getIdAsIdQueryPart() . '
           ' . $this->alias . '.* ' . $this->joinFields() . '
           FROM `' . $this->tablename . '` AS ' . $this->alias . '
           ' . $this->joinQuery() . '
