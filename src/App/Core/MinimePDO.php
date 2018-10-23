@@ -12,6 +12,10 @@ class MinimePDO {
     const CHARSET_LAT1 = 'latin1';
     const CHARSET_UTF8 = 'utf8';
 
+    const COLLATE_LATIN1_GENERAL_CI = 'latin1_general_ci';
+    const COLLATE_UTF8_UNICODE_CI = 'utf8_unicode_ci';
+    const COLLATE_UTF8MB4_UNICODE_CI = 'utf8mb4_unicode_ci';
+
     protected $host     = 'localhost';
     protected $dbname   = null;
     protected $username = null;
@@ -37,6 +41,14 @@ class MinimePDO {
         $this->dbname      = $cfg['dbname'];
         $this->username    = $cfg['username'];
         $this->password    = $cfg['password'];
+
+        if (isset($cfg['charset'])) {
+            $this->charset  = $cfg['charset'];
+        }
+        if (isset($cfg['collate'])) {
+            $this->collate  = $cfg['collate'];
+        }
+
         $this->link        = null;
     }
 
@@ -53,19 +65,22 @@ class MinimePDO {
             $this->password);
         $this->link->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $this->link->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        $this->switchCharset($this->charset, $this->collate);
     }
 
     /**
      * to switch between lat1 and utf8
-     * @param string $enc    self::CHARSET_*
+     *
+     * @param string $enc     self::CHARSET_*
+     * @param string $collate self::COLLATE_*
      */
-    public function switchCharset($enc = self::CHARSET_LAT1)
+    public function switchCharset($enc = self::CHARSET_UTF8, $collate = self::COLLATE_UTF8MB4_UNICODE_CI)
     {
         if(in_array($enc, array(self::CHARSET_LAT1, self::CHARSET_UTF8)))
         {
             $this->getConnection()->exec('set names '.$enc.';');
-            //$this->getConnection()->exec('SET NAMES utf8 COLLATE utf8_unicode_ci;');
         }
+        $this->getConnection()->exec('SET NAMES '.$enc.' COLLATE '.$collate.';');
     }
 
     public function getLastInsertId() {

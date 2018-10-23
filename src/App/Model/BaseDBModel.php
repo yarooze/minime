@@ -343,7 +343,7 @@ FROM `' . $this->tablename . '` AS ' . $this->alias . ' ';
         if (empty($this->db)) {
             //$this->setDb(new PDO(__CLASS__));
         }
-        $this->db->switchCharset(PDO::CHARSET_UTF8);
+        //$this->db->switchCharset(PDO::CHARSET_UTF8, PDO::COLLATE_UTF8MB4_UNICODE_CI);
         return $this->db;
     }
 
