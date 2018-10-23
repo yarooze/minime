@@ -22,6 +22,7 @@ class MinimePDO {
     protected $password = null;
     protected $link     = null;
     protected $charset  = 'utf8';
+    protected $collate  = 'utf8_unicode_ci';
 
     protected $stmt     = null;
     /**
