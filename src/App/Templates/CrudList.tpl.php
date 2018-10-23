@@ -7,8 +7,10 @@
                 <th scope="col"><?php $view->printString($fieldName); ?></th>
             <?php endforeach ?>
             <th>
+                <?php if (!in_array('CREATE', $this->actions)): ?>
                 <a class="btn btn-primary"
-                   href="<?php echo $app->router->getUrl($route_edit, array('id' => 0)); ?>"><?php echo $i18n->trans('NEW_ENTITY'); ?></th>
+                   href="<?php echo $app->router->getUrl($route_edit, array('id' => 0)); ?>"><?php echo $i18n->trans('NEW_ENTITY'); ?>
+                <?php endif; ?>
             </th>
             <th></th>
         </tr>
@@ -21,10 +23,13 @@
                 $view->renderPartial($partialName, array('fieldName' => $fieldName, 'entity' => $entity, 'fieldData' => $fieldData));
             } ?>
             <td data-column="edit">
+                <?php if (!in_array('EDIT', $this->actions)): ?>
                 <a class="btn btn-success"
-                   href="<?php echo $app->router->getUrl($route_edit, array('id' => $entity['id'])); ?>"><?php echo $i18n->trans('EDIT'); ?></a></td>
+                   href="<?php echo $app->router->getUrl($route_edit, array('id' => $entity['id'])); ?>"><?php echo $i18n->trans('EDIT'); ?></a>
+                <?php endif; ?>
             </td>
             <td data-column="delete">
+                <?php if (!in_array('DELETE', $this->actions)): ?>
                 <form name="<?php echo $deleteForm->getName(); ?>" method="post"
                       action="<?php echo $app->router->getUrl($route_delete, array('id' => $entity['id'])); ?>">
                     <input name="<?php echo $deleteForm->getFullFieldName('csrf_tocken'); ?>"
@@ -32,6 +37,7 @@
                     <input class="btn btn-danger" name="action" value="<?php echo $i18n->trans('DELETE'); ?>"
                            onclick="return confirm('<?php echo $i18n->trans('CONFIRM_DELETE'); ?>');" type="submit">
                 </form>
+                <?php endif; ?>
             </td>
             <?php endforeach;  ?>
         </tr>

@@ -10,6 +10,8 @@ use App\Core\Flasher;
  */
 Abstract Class MinimeCrudController extends BaseController
 {
+    protected $actions = array('LIST', 'VIEW', 'CREATE', 'EDIT', 'DELETE');
+
     /**
      * Full model class name (e.g. 'App\Model\User')
      *
@@ -41,6 +43,9 @@ Abstract Class MinimeCrudController extends BaseController
 
     public function listAction()
     {
+        if (!in_array('LIST', $this->actions)) {
+            $this->app->router->redirect('default', array());
+        }
         $view = new $this->viewNameList($this->app);
         $deleteForm = new $this->formNameDelete(array('form_name' => 'form_crud_delete'));
         $deleteForm->generateCsrfTocken($this->app->session->getSessionId());
@@ -64,6 +69,7 @@ Abstract Class MinimeCrudController extends BaseController
             'route_edit' => $this->routeEdit,
             'route_delete' => $this->routeDelete,
             'pager' => $params,
+            'actions' => $this->actions,
         ));
     }
 
@@ -103,10 +109,17 @@ Abstract Class MinimeCrudController extends BaseController
 
                 $model = new $this->modelName(array(), $db);
                 if ($entity_id > 0) {
+                    if (!in_array('EDIT', $this->actions)) {
+                        $this->app->router->redirect('default', array());
+                    }
                     $entityData = $model->retrieveById($entity_id);
                     if (!$entityData) {
                         $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
                         $this->app->router->redirect($this->routeList, array());
+                    }
+                } else {
+                    if (!in_array('CREATE', $this->actions)) {
+                        $this->app->router->redirect('default', array());
                     }
                 }
 
@@ -133,10 +146,14 @@ Abstract Class MinimeCrudController extends BaseController
             'route_list' => $this->routeList,
             'route_edit' => $this->routeEdit,
             'route_delete' => $this->routeDelete,
+            'actions' => $this->actions,
         ));
     }
 
     public function deleteAction() {
+        if (!in_array('DELETE', $this->actions)) {
+            $this->app->router->redirect('default', array());
+        }
         $entity_id = $this->app->request->getParameter('id', 0);
         $db = $this->app->db;
         $flasher = new Flasher($this->app);
