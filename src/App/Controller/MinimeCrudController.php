@@ -67,6 +67,7 @@ Abstract Class MinimeCrudController extends BaseController
         $view->render(array(
             'collection' => $collection,
             'deleteForm' => $deleteForm,
+            'model' => $model,
             'fields' => $this->fieldsList,
             'template_name' => $this->templateList,
             'page_name' => $this->pageNameList,
@@ -90,8 +91,8 @@ Abstract Class MinimeCrudController extends BaseController
         $i18n = $this->app->i18n;
         $entityData = array();
 
+        $model = new $this->modelName(array(), $db);
         if ($method === 'get') {
-            $model = new $this->modelName(array(), $db);
             if ($entity_id > 0) {
                 $entityData = $model->retrieveById($entity_id);
             }
@@ -113,7 +114,6 @@ Abstract Class MinimeCrudController extends BaseController
                     $this->app->router->redirect($this->routeList, array());
                 }
 
-                $model = new $this->modelName(array(), $db);
                 if ($entity_id > 0) {
                     if (!in_array('EDIT', $this->actions)) {
                         $this->app->router->redirect('default', array());
@@ -145,6 +145,7 @@ Abstract Class MinimeCrudController extends BaseController
         $view->render(array(
             'page_name' => $i18n->trans('EDIT_ENTITY_ID', array('%ENTITY_ID%' => $entity_id)),
             'form' => $form,
+            'model' => $model,
             'errs' => $errs,
             'fields' => $this->fieldsEdit,
             'template_name' => $this->templateEdit,

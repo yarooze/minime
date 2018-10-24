@@ -4,6 +4,7 @@
         <thead>
         <tr>
             <?php foreach ($fields as $fieldName => $fieldData): ?>
+            <?php $fieldName = (isset($fieldData['title'])) ? $i18n->trans($fieldData['title']) : $fieldName; ?>
                 <th scope="col"><?php $view->printString($fieldName); ?></th>
             <?php endforeach ?>
             <th>
