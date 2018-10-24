@@ -21,22 +21,27 @@ Abstract Class MinimeCrudController extends BaseController
 
     protected $viewNameList = 'App\View\MinimeCrudView';
     protected $viewNameEdit = 'App\View\MinimeCrudView';
+    protected $viewNameView = 'App\View\MinimeCrudView';
 
     protected $templateList = '/../Templates/CrudList.tpl.php';
     protected $templateEdit = '/../Templates/CrudEdit.tpl.php';
+    protected $templateView = '/../Templates/CrudView.tpl.php';
 
     protected $pageNameList = 'List';
     protected $pageNameEdit = 'Edit';
+    protected $pageNameView = 'View';
 
     protected $formNameEdit = 'App\Form\BaseForm';
     protected $formNameDelete = 'App\Form\BaseForm';
 
     protected $routeList = '{crud}List';
     protected $routeEdit = '{crud}Edit';
+    protected $routeView = '{crud}View';
     protected $routeDelete = '{crud}Delete';
 
     // array(fieldname => array(),..)
     protected $fieldsEdit = array();
+    protected $fieldsView = array();
     protected $fieldsList = array();
 
     protected $pagerLimit = 50;
@@ -66,6 +71,7 @@ Abstract Class MinimeCrudController extends BaseController
             'template_name' => $this->templateList,
             'page_name' => $this->pageNameList,
             'route_list' => $this->routeList,
+            'route_view' => $this->routeView,
             'route_edit' => $this->routeEdit,
             'route_delete' => $this->routeDelete,
             'pager' => $params,
@@ -144,7 +150,42 @@ Abstract Class MinimeCrudController extends BaseController
             'template_name' => $this->templateEdit,
             'page_name' => $this->pageNameEdit,
             'route_list' => $this->routeList,
+            'route_view' => $this->routeView,
             'route_edit' => $this->routeEdit,
+            'route_delete' => $this->routeDelete,
+            'actions' => $this->actions,
+        ));
+    }
+
+    public function viewAction () {
+        $view = new $this->viewNameEdit($this->app);
+        $entity_id = $this->app->request->getParameter('id', 0);
+        $db = $this->app->db;
+        $method = $this->app->request->getMethod();
+        //$form = new $this->formNameEdit(array('form_name' => 'form_crud_edit'));
+        //$form->generateCsrfTocken($this->app->session->getSessionId());
+        $flasher = new Flasher($this->app);
+        $i18n = $this->app->i18n;
+        $entityData = array();
+
+        if ($method === 'get') {
+            $model = new $this->modelName(array(), $db);
+            $entityData = $model->retrieveById($entity_id);
+            if (!$entityData) {
+                $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
+                $this->app->router->redirect($this->routeList, array());
+            }
+        }
+
+        $view->render(array(
+            'page_name' => $i18n->trans('VIEW_ENTITY_ID', array('%ENTITY_ID%' => $entity_id)),
+            'fields' => $this->fieldsView,
+            'entity' => $entityData,
+            'template_name' => $this->templateView,
+            'page_name' => $this->pageNameView,
+            'route_list' => $this->routeList,
+            'route_edit' => $this->routeEdit,
+            'route_view' => $this->routeView,
             'route_delete' => $this->routeDelete,
             'actions' => $this->actions,
         ));

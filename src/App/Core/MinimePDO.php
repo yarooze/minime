@@ -75,12 +75,12 @@ class MinimePDO {
      * @param string $enc     self::CHARSET_*
      * @param string $collate self::COLLATE_*
      */
-    public function switchCharset($enc = self::CHARSET_UTF8, $collate = self::COLLATE_UTF8MB4_UNICODE_CI)
+    public function switchCharset($enc = self::CHARSET_UTF8, $collate = self::COLLATE_UTF8_UNICODE_CI)
     {
-        if(in_array($enc, array(self::CHARSET_LAT1, self::CHARSET_UTF8)))
-        {
-            $this->getConnection()->exec('set names '.$enc.';');
-        }
+//        if(in_array($enc, array(self::CHARSET_LAT1, self::CHARSET_UTF8)))
+//        {
+//            $this->getConnection()->exec('set names '.$enc.';');
+//        }
         $this->getConnection()->exec('SET NAMES '.$enc.' COLLATE '.$collate.';');
     }
 
