@@ -61,11 +61,19 @@ return array(
 //            'credentials'     => array('AUTHENTICATED_FULLY'),
 //        ),
 //    '{crud}Edit' =>
-//        array('url' => array('{crud}', array('name' => 'id', 'regexp' => '\d+')),
+//        array('url' => array('{crud}', 'edit', array('name' => 'id', 'regexp' => '\d+')),
 //            'methods' => array("get", "post"),
 //            'formats' => array('html'),
 //            'controller' => '{crud}Controller',
 //            'action' => 'editAction',
+//            'credentials'     => array('AUTHENTICATED_FULLY'),
+//        ),
+//    '{crud}View' =>
+//        array('url' => array('{crud}', array('name' => 'id', 'regexp' => '\d+')),
+//            'methods' => array("get", "post"),
+//            'formats' => array('html'),
+//            'controller' => '{crud}Controller',
+//            'action' => 'viewAction',
 //            'credentials'     => array('AUTHENTICATED_FULLY'),
 //        ),
 //    '{crud}Delete' =>

@@ -13,6 +13,7 @@
                 <?php endif; ?>
             </th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -22,12 +23,13 @@
                 $partialName = isset($fieldData['partial']) ? $fieldData['partial'] : 'crudListField';
                 $view->renderPartial($partialName, array('fieldName' => $fieldName, 'entity' => $entity, 'fieldData' => $fieldData));
             } ?>
-            <td data-column="edit">
+            <td data-column="view">
                 <?php if (in_array('VIEW', $actions)): ?>
                 <a class="btn btn-info"
                    href="<?php echo $app->router->getUrl($route_view, array('id' => $entity['id'])); ?>"><?php echo $i18n->trans('VIEW'); ?></a>
                 <?php endif; ?>
-                &nbsp;
+            </td>
+            <td data-column="edit">
                 <?php if (in_array('EDIT', $actions)): ?>
                 <a class="btn btn-success"
                    href="<?php echo $app->router->getUrl($route_edit, array('id' => $entity['id'])); ?>"><?php echo $i18n->trans('EDIT'); ?></a>
