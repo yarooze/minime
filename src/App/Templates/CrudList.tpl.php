@@ -53,7 +53,7 @@
 </div>
 <?php
 if ($pager['all_pages'] > 1) :
-    $plusMinusPages = 25;
+    $plusMinusPages = 10;
     $curPage = $pager['page']; ?>
     <div class="container">
         <nav aria-label="pager">
