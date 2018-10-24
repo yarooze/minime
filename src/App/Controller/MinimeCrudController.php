@@ -168,18 +168,21 @@ Abstract Class MinimeCrudController extends BaseController
         $i18n = $this->app->i18n;
         $entityData = array();
 
-        if ($method === 'get') {
-            $model = new $this->modelName(array(), $db);
-            $entityData = $model->retrieveById($entity_id);
-            if (!$entityData) {
-                $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
-                $this->app->router->redirect($this->routeList, array());
-            }
+        if ($method !== 'get') {
+            $this->app->router->redirect($this->routeList, array());
         }
+        $model = new $this->modelName(array(), $db);
+        $entityData = $model->retrieveById($entity_id);
+        if (!$entityData) {
+            $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
+            $this->app->router->redirect($this->routeList, array());
+        }
+        $model->setFieldsFromArray($entityData);
 
         $view->render(array(
             'page_name' => $i18n->trans('VIEW_ENTITY_ID', array('%ENTITY_ID%' => $entity_id)),
             'fields' => $this->fieldsView,
+            'model' => $model,
             'entity' => $entityData,
             'template_name' => $this->templateView,
             'page_name' => $this->pageNameView,

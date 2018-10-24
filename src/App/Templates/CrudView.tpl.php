@@ -9,6 +9,6 @@
     <?php $entity_id = (int)$entity['id']; ?>
         <?php foreach ($fields as $fieldName => $fieldData) {
             $partialName = isset($fieldData['partial']) ? $fieldData['partial'] : 'crudViewField';
-            $view->renderPartial($partialName, array('fieldName' => $fieldName, 'entity' => $entity, 'fieldData' => $fieldData));
+            $view->renderPartial($partialName, array('fieldName' => $fieldName, 'model' => $model, 'entity' => $entity, 'fieldData' => $fieldData));
         } ?>
 </div>
