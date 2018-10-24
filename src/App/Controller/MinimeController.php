@@ -16,4 +16,8 @@ Class MinimeController
   {
     $this->app = $app;
   }
+
+  protected function renderView($view, $data = array()) {
+      $view->render($data);
+  }
 }

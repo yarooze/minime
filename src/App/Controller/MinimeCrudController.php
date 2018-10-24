@@ -64,7 +64,7 @@ Abstract Class MinimeCrudController extends BaseController
         );
         $collection = $model->retriveCollection($params);
 
-        $view->render(array(
+        $this->renderView($view, array(
             'collection' => $collection,
             'deleteForm' => $deleteForm,
             'model' => $model,
@@ -142,7 +142,7 @@ Abstract Class MinimeCrudController extends BaseController
             }
         }
 
-        $view->render(array(
+        $this->renderView($view, array(
             'page_name' => $i18n->trans('EDIT_ENTITY_ID', array('%ENTITY_ID%' => $entity_id)),
             'form' => $form,
             'model' => $model,
@@ -180,7 +180,7 @@ Abstract Class MinimeCrudController extends BaseController
         }
         $model->setFieldsFromArray($entityData);
 
-        $view->render(array(
+        $this->renderView($view, array(
             'page_name' => $i18n->trans('VIEW_ENTITY_ID', array('%ENTITY_ID%' => $entity_id)),
             'fields' => $this->fieldsView,
             'model' => $model,
