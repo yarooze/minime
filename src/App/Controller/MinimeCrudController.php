@@ -58,10 +58,24 @@ Abstract Class MinimeCrudController extends BaseController
         $db = $this->app->db;
         $model = new $this->modelName(array(), $db);
 
+        // pager
+        $limit = $this->app->request->getParameter('limit', $this->pagerLimit);
+        $limit = ($limit > 100) ? 100 : $limit;
+        $page = $this->app->request->getParameter('page', 1);
         $params = array(
-            'page'  => $this->app->request->getParameter('page', 1),
-            'limit'  => $this->app->request->getParameter('limit', $this->pagerLimit),
+            'page'  => $page,
+            'limit'  => $limit,
         );
+        // filter
+        $filter = $this->app->request->getParameter('filter', null);
+        if ($filter) {
+            $params['filter'] = $filter;
+        }
+        $orderby = $this->app->request->getParameter('orderby', null);
+        if ($orderby) {
+            $params['orderby'] = $orderby;
+        }
+
         $collection = $model->retriveCollection($params);
 
         $this->renderView($view, array(
@@ -75,7 +89,7 @@ Abstract Class MinimeCrudController extends BaseController
             'route_view' => $this->routeView,
             'route_edit' => $this->routeEdit,
             'route_delete' => $this->routeDelete,
-            'pager' => $params,
+            'filter' => $params,
             'actions' => $this->actions,
         ));
     }

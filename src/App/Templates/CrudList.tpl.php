@@ -17,6 +17,7 @@
             <th></th>
         </tr>
         </thead>
+        <?php $view->renderPartial('crudFilter', array('model' => $model, 'fieldData' => $fieldData)); ?>
         <tbody>
         <?php foreach ($collection as $entity): ?>
         <tr>
@@ -52,42 +53,4 @@
         </tbody>
     </table>
 </div>
-<?php
-if ($pager['all_pages'] > 1) :
-    $plusMinusPages = 10;
-    $curPage = $pager['page']; ?>
-    <div class="container">
-        <nav aria-label="pager">
-            <ul class="pagination justify-content-center">
-                <?php if ($pager['page'] - $plusMinusPages > 1) { ?>
-                    <li class="page-item"><a class="page-link" href="<?php
-                        echo $app->router->getUrl($route_list, array('query' => array('page' => 1))); ?>">1</a></li>
-                    <li class="page-item">
-                        &nbsp;&nbsp;
-                    </li>
-                <?php } ?>
-
-                <?php for ($page = 1; $pager['all_pages'] >= $page; $page++ ) {
-                    if ($pager['page'] - $plusMinusPages > $page) {
-                        continue;
-                    }
-                    if ($pager['page'] + $plusMinusPages < $page) {
-                        continue;
-                    }
-                    ?>
-                    <li class="page-item<?php echo ($page == $pager['page']) ?  ' active' : ''; ?>"><a class="page-link" href="<?php
-                        echo $app->router->getUrl($route_list, array('query' => array('page' => $page))); ?>"><?php
-                            echo $page; ?></a></li>
-                <?php } ?>
-
-                <?php if ($pager['page'] + $plusMinusPages < $pager['all_pages']) { ?>
-                    <li class="page-item">
-                        &nbsp;&nbsp;
-                    </li>
-                    <li class="page-item"><a class="page-link" href="<?php
-                        echo $app->router->getUrl($route_list, array('query' => array('page' => $pager['all_pages']))); ?>"><?php echo $pager['all_pages']; ?></a></li>
-                <?php } ?>
-            </ul>
-        </nav>
-    </div>
-<?php endif;
+<?php $view->renderPartial('crudPager', array('route_list' => $route_list, 'filter' => $filter)); ?>
