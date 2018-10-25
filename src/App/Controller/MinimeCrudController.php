@@ -44,6 +44,8 @@ Abstract Class MinimeCrudController extends BaseController
     protected $fieldsView = array();
     protected $fieldsList = array();
 
+    protected $filter_cfg = array();
+
     protected $pagerLimit = 50;
 
     public function listAction()
@@ -89,6 +91,7 @@ Abstract Class MinimeCrudController extends BaseController
             'route_view' => $this->routeView,
             'route_edit' => $this->routeEdit,
             'route_delete' => $this->routeDelete,
+            'filter_cfg' => $this->filter_cfg,
             'filter' => $params,
             'actions' => $this->actions,
         ));

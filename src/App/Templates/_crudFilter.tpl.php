@@ -8,4 +8,5 @@ $i18n = $this->app->i18n;
  *                                   retrieve all
  *                   'orderby'   - array(array('name' => 'NAME', 'order' => 'ASC|DESC'))
  */
+// array('model' => $model, 'route_list' => $route_list, 'filter' => $filter, 'fields' => $fields, 'filter_cfg' => $filter_cfg)
 // $app->router->getUrl($route_list, array('query' => $filter));
