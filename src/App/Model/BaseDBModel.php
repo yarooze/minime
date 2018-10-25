@@ -212,7 +212,7 @@ abstract class BaseDBModel
         $q_cnt = 'SELECT
 count(*) AS cnt
 FROM `' . $this->tablename . '` AS ' . $this->alias . ' ';
-        $q_cnt .= $q_where . $q_group . ';';
+        $q_cnt .= $q_where . ';';
 
         $stmt = $this->getDb()->prepareStatement($q_cnt);
         $all_rows_cnt = 0;
