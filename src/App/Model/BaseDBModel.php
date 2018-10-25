@@ -164,9 +164,17 @@ abstract class BaseDBModel
         $q_where = '';
         if (is_array($filter)) {
             foreach ($filter as $r_name => $r_value) {
+
+                $dbfield = $r_name;
+                $mapping = $this->getMappinfByFieldName($r_name);
+                if ($mapping && isset($mapping['dbfield'])) {
+                    $dbfield = $mapping['dbfield'];
+                }
+
                 $q_where .= (empty($q_where)) ? '' : ' AND ';
                 if (is_array($r_value)) {
-                    $q_where .= ' ' . $this->alias . '.' . $r_name . ' IN ( ';
+                    //$q_where .= ' ' . $this->alias . '.' . $r_name . ' IN ( ';
+                    $q_where .= ' ' . $dbfield . ' IN ( ';
                     foreach ($r_value as $in_key => $in_value) {
                         $args[':' . $r_name . '_' . $in_key] = $in_value;
                         if ($in_key > 0) {
@@ -177,7 +185,8 @@ abstract class BaseDBModel
                     $q_where .= ' ) ';
                 } else {
                     $args[':' . $r_name] = $r_value;
-                    $q_where .= ' ' . $this->alias . '.' . $r_name . ' = :' . $r_name . ' ';
+                    $q_where .= ' ' . $dbfield . ' = :' . $r_name . ' ';
+//                    $q_where .= ' ' . $this->alias . '.' . $r_name . ' = :' . $r_name . ' ';
                 }
             }
         }
@@ -318,8 +327,7 @@ FROM `' . $this->tablename . '` AS ' . $this->alias . ' ';
             return;
         }
         foreach ($values as $f_name => $f_value) {
-            $normalized = strtolower(str_replace('_', '', $f_name));
-            $mapping = isset($this->mapping[$normalized]) ? $this->mapping[$normalized] : null;
+            $mapping = $this->getMappinfByFieldName($f_name);
             if ($mapping === null) {
                 //throw new \RuntimeException('No mapping for the field [' . $f_name . ']!');
                 continue;
@@ -332,6 +340,12 @@ FROM `' . $this->tablename . '` AS ' . $this->alias . ' ';
                 $this->$f_name = $f_value;
             }
         }
+    }
+
+    protected function getMappinfByFieldName($f_name) {
+        $normalized = strtolower(str_replace('_', '', $f_name));
+        $mapping = isset($this->mapping[$normalized]) ? $this->mapping[$normalized] : null;
+        return $mapping;
     }
 
     /**
