@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__.'/../Helper/HtmlHelper.php';
+
+$i18n = $this->app->i18n;
+
 $attr = array(
     'type' => 'text',
     'class' => 'form-control',
