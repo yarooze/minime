@@ -37,7 +37,7 @@ if ($filter['all_pages'] > 1) :
                     </li>
                     <li class="page-item"><a class="page-link" href="<?php
                         $query['page'] = $filter['all_pages'];
-                        echo $app->router->getUrl($route_list, array('query' => $query)); ?>"><?php echo $pager['all_pages']; ?></a></li>
+                        echo $app->router->getUrl($route_list, array('query' => $query)); ?>"><?php echo $filter['all_pages']; ?></a></li>
                 <?php } ?>
             </ul>
         </nav>
