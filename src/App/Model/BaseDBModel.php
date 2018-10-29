@@ -121,6 +121,7 @@ abstract class BaseDBModel
                 $this->insert();
             }
         } catch (\Exception $e) {
+            $this->db->app->logger->log(array(date('Y.m.d H:i:s'), $e->getMessage(), $e));
             return false;
         }
 
