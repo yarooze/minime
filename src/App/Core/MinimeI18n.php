@@ -29,12 +29,21 @@ class MinimeI18n
         $this->locale = $this->app->config->get('locale', $this->locale);
         if (!array_key_exists($this->locale, $this->messages)) {
             $this->messages[$this->locale] = array();
-            $filename = $this->root_dir . '/i18n/'. $this->locale .'.php';
+
+            $filename = __DIR__ . '/../../../i18n/'. $this->locale .'.php';
             if (file_exists($filename)) {
                 $this->messages[$this->locale] = require $filename;
             }
+
+            $filename = $this->root_dir . '/i18n/'. $this->locale .'.php';
+            if (file_exists($filename)) {
+                $this->messages[$this->locale] = array_merge(
+                    $this->messages[$this->locale], require $filename
+                );
+            }
         }
 
+        $this->app->loadHelper('ArrayHelper');
         $message = getAV($this->messages[$this->locale], $message, $message);
         foreach ($params as $key => $value) {
             $message = str_replace($key, $value, $message);

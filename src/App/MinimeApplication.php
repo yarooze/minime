@@ -1,10 +1,6 @@
 <?php
-namespace App;
 
-require_once __DIR__.'/Exception/MinimeException.php';
-require_once __DIR__.'/Exception/UnknownRouteException.php';
-//require_once __DIR__.'/../../vendor/autoload.php';
-//require_once __DIR__.'/../../../twittee/src/Twittee/Container.php';
+namespace App;
 
 use App\Core\Container as Container,
     App\Exception\MinimeException as MinimeException,
@@ -37,9 +33,6 @@ class MinimeApplication extends Container
 
     $action = $this->router->getActionName();
     $this->controller->$action();
-//     echo '<pre>';
-//     print_r($this->router);
-//     echo '</pre>';
   }
 
   /**
@@ -57,26 +50,55 @@ class MinimeApplication extends Container
     return htmlspecialchars($text, $flags, $charset ?: $this->config->get('charset'), $doubleEncode);
   }
 
-  /**
-   * very simple autoloader for this project
-   * @param string $classname
-   * @param string $namespace
-   * @param string $path
-   * @throws MinimeException
-   * @return Object
-   */
-  public function loadClass($classname, $namespace = '\\', $path = '/')
-  {
-    $class = null;
-    if(!is_file(__DIR__.$path.$classname.'.php'))
+    /**
+     * very simple autoloader for this project
+     * @param string $classname
+     * @param string $namespace
+     * @param string $path
+     * @throws MinimeException
+     * @return Object
+     */
+    public function loadClass($classname, $namespace = '\\', $path = '/')
     {
-        throw new MinimeException('Class ['.$namespace.''.$classname.' in '.$path.'] not found!');
+        $root_dir = $this->config->get('APP_ROOT_DIR');
+
+        $class = null;
+        $file = $root_dir.'/src/App/'.$path.$classname.'.php';
+        if(!is_file($file))
+        {
+            $file = __DIR__.$path.$classname.'.php';
+        }
+        if(!is_file($file))
+        {
+            throw new MinimeException('Class ['.$namespace.''.$classname.' in '.$path.'] not found!');
+        }
+        require_once $file;
+
+        $classname = $namespace.$classname;
+        $class     = new $classname($this);
+
+        return $class;
     }
-    require_once __DIR__.$path.$classname.'.php';
 
-    $classname = $namespace.$classname;
-    $class     = new $classname($this);
+  /**
+   * Loads helper functions
+   * @param string $helpername
+   */
+  public function loadHelper($helpername) 
+  {
+    $root_dir = $this->config->get('APP_ROOT_DIR');
 
-    return $class;
+    $file = $root_dir.$helpername.'.php';
+
+    if(!is_file($file))
+    {
+        $file = __DIR__.'/Helper/'.$helpername.'.php';
+    }
+    if(!is_file($file))
+    {      
+        throw new MinimeException('Helper ['.$helpername.' in '.__DIR__.'/Helper/'.'] not found!');
+    }
+
+    require_once __DIR__.'/Helper/'.$helpername.'.php';    
   }
 }

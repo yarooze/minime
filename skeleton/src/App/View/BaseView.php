@@ -30,9 +30,27 @@ Abstract Class BaseView extends MinimeBaseView
             $templateDir = parent::getTemplateDir();
         }
         include $templateDir . '_'.$partial.'.tpl.php';
-//        include __DIR__.'/../Templates/_'.$partial.'.tpl.php';
     }
 
+
+    /**
+     * renders the template
+     *
+     * @param string $template - template name  (without `.tpl.php`)
+     * @param array  $params  - variables for the partial
+     */
+    public function renderTemplate($template, $params) {
+        $app = $this->app;
+        $view = $this;
+        extract($params);
+
+        $templateDir = $this->getTemplateDir();
+        if (!file_exists ($templateDir . $template.'.tpl.php')) {
+            $templateDir = parent::getTemplateDir();
+        }
+        include $templateDir . $template.'.tpl.php';
+    }    
+    
     /**
      * renders the template
      *
@@ -42,13 +60,10 @@ Abstract Class BaseView extends MinimeBaseView
     {
         $this->sendHeaders();
 
-        $app = $this->app;
-        $view = $this;
-        extract($params);
-        if ($this->main_template_name === null) {
-            include __DIR__.$this->template_name;
+        if ($this->main_template_name === null) {           
+            $this->renderTemplate($this->template_name, $params);
         } else { // Render main template first. View template will be inserted in it.
-            include __DIR__.$this->main_template_name;
+            $this->renderTemplate($this->main_template_name, $params);
         }
     }
 }

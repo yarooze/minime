@@ -8,11 +8,10 @@
     <script src="/assets/js/popper.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
 </head>
 <body>
 <?php $view->renderPartial('headerPartial', array()); ?>
-<?php include __DIR__ . $this->template_name; ?>
+<?php $view->renderTemplate($this->template_name, $params); ?>
 <?php $view->renderPartial('footerPartial', array()); ?>
 </body>
 </html>

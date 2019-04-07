@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Core\I18n;
 use App\View\DefaultView as DefaultView,
     App\View\HtmlView as HtmlView,
     App\Form\MyRegisterForm as RegisterForm;
@@ -9,17 +10,20 @@ use App\View\DefaultView as DefaultView,
  *
  * @author jb
  */
-Class DefaultController extends BaseController
+Class ExampleController extends BaseController
 {
   public function defaultAction()
   {
     //$view = new DefaultView($this->app);
     $view = new HtmlView($this->app);
-    
 
     $data = $this->app->request->getParameters();
 
     $form = new RegisterForm();
+
+    /** @var I18n $i18n */
+    $i18n = $this->app->i18n;
+    $data['i18n'] = $i18n->trans('MSG');
 
     $params = array(
         'main_template_name' => 'Main',
