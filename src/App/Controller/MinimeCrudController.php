@@ -31,6 +31,7 @@ Abstract Class MinimeCrudController extends BaseController
     protected $pageNameEdit = 'Edit';
     protected $pageNameView = 'View';
 
+    protected $formNameFilter = 'App\Form\BaseForm';
     protected $formNameEdit = 'App\Form\BaseForm';
     protected $formNameDelete = 'App\Form\BaseForm';
 
@@ -44,6 +45,8 @@ Abstract Class MinimeCrudController extends BaseController
     protected $fieldsView = array();
     protected $fieldsList = array();
 
+    protected $filter_cfg = array();
+
     protected $pagerLimit = 50;
 
     public function listAction()
@@ -55,18 +58,50 @@ Abstract Class MinimeCrudController extends BaseController
         $deleteForm = new $this->formNameDelete(array('form_name' => 'form_crud_delete'));
         $deleteForm->generateCsrfTocken($this->app->session->getSessionId());
 
+        $filterForm = new $this->formNameDelete(array('form_name' => 'form_crud_filter'));
+        $filterForm->generateCsrfTocken($this->app->session->getSessionId());
+
         $db = $this->app->db;
         $model = new $this->modelName(array(), $db);
 
+        // pager
+        $limit = $this->app->request->getParameter('limit', $this->pagerLimit);
+        $limit = ($limit > 100) ? 100 : $limit;
+        $page = $this->app->request->getParameter('page', 1);
         $params = array(
-            'page'  => $this->app->request->getParameter('page', 1),
-            'limit'  => $this->app->request->getParameter('limit', $this->pagerLimit),
+            'page'  => $page,
+            'limit'  => $limit,
         );
+        // filter
+        $filter = $this->app->request->getParameter('filter', null);
+        if ($filter) {
+            foreach ($filter as $key => $value) {
+                if ($value  === "") {
+                    unset($filter[$key]);
+                }
+            }
+            if (!empty($filter)) {
+                $params['filter'] = $filter;
+            }
+        }
+        $orderby = $this->app->request->getParameter('orderby', null);
+        if ($orderby) {
+            foreach ($orderby as $key => $value) {
+                if ($value  === "") {
+                    unset($orderby[$key]);
+                }
+            }
+            if (!empty($orderby)) {
+                $params['orderby'] = $orderby;
+            }
+        }
+
         $collection = $model->retriveCollection($params);
 
         $this->renderView($view, array(
             'collection' => $collection,
             'deleteForm' => $deleteForm,
+            'filterForm' => $filterForm,
             'model' => $model,
             'fields' => $this->fieldsList,
             'template_name' => $this->templateList,
@@ -75,7 +110,8 @@ Abstract Class MinimeCrudController extends BaseController
             'route_view' => $this->routeView,
             'route_edit' => $this->routeEdit,
             'route_delete' => $this->routeDelete,
-            'pager' => $params,
+            'filter_cfg' => $this->filter_cfg,
+            'filter' => $params,
             'actions' => $this->actions,
         ));
     }
