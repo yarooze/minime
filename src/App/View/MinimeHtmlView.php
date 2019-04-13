@@ -2,9 +2,6 @@
 
 namespace App\View;
 
-// require_once __DIR__.'/BaseView.php';
-require_once __DIR__.'/../Helper/HtmlHelper.php';
-
 /**
  *
  * @author jb
@@ -13,7 +10,7 @@ Class MinimeHtmlView extends BaseView
 {
     public function render($params)
     {
-        $this->main_template_name = '/../Templates/Main.tpl.php';
+        $this->main_template_name = 'Main';
         if (isset($params['main_template_name'])) {
             $this->main_template_name = $params['main_template_name'];
         }

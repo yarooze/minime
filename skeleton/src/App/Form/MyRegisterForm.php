@@ -2,8 +2,6 @@
 
 namespace App\Form;
 
-require_once __DIR__.'/BaseForm.php';
-
 /**
  *
  * @author jb

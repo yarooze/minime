@@ -23,9 +23,9 @@ Abstract Class MinimeCrudController extends BaseController
     protected $viewNameEdit = 'App\View\MinimeCrudView';
     protected $viewNameView = 'App\View\MinimeCrudView';
 
-    protected $templateList = '/../Templates/CrudList.tpl.php';
-    protected $templateEdit = '/../Templates/CrudEdit.tpl.php';
-    protected $templateView = '/../Templates/CrudView.tpl.php';
+    protected $templateList = 'CrudList';
+    protected $templateEdit = 'CrudEdit';
+    protected $templateView = 'CrudView';
 
     protected $pageNameList = 'List';
     protected $pageNameEdit = 'Edit';

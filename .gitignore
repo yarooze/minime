@@ -2,6 +2,6 @@
 /.project
 /.settings
 /.idea
-/config/config_app.php
-/config/routing.php
+/config/config_app.inc.php
+/config/routing.inc.php
 /vendor

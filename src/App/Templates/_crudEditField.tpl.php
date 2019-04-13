@@ -68,6 +68,7 @@ elseif (isset($fieldData['type']) && in_array($fieldData['type'], array('checkbo
                             echo ' ' . $key . '="'.  $val . '" ';
                         } ?>
                         <?php echo (in_array($form->getValue($fieldName), array(1, '1', true, 'on'), true)) ? ' checked="checked"' : ''; ?> >
+
                     <?php $view->printString($title); ?>
                 </label>
             </div>

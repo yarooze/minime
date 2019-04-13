@@ -9,6 +9,6 @@ namespace App\View;
  */
 Class LoginView extends HtmlView
 {
-    protected $template_name = '/../Templates/Login.tpl.php';
+    protected $template_name = 'Login';
     protected $page_name  = 'Login';
 }

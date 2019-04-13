@@ -1,11 +1,8 @@
 <?php
 namespace App\Controller;
 
-require_once __DIR__.'/BaseController.php';
-require_once __DIR__.'/../View/DefaultView.php';
-require_once __DIR__.'/../Form/MyRegisterForm.php';
-
 use App\View\DefaultView as DefaultView,
+    App\View\HtmlView as HtmlView,
     App\Form\MyRegisterForm as RegisterForm;
 
 /**
@@ -16,13 +13,22 @@ Class DefaultController extends BaseController
 {
   public function defaultAction()
   {
-    $view = new DefaultView($this->app);
+    //$view = new DefaultView($this->app);
+    $view = new HtmlView($this->app);
+    
 
     $data = $this->app->request->getParameters();
 
     $form = new RegisterForm();
 
-    $view->render(array('data' => $data,'form' => $form));
+    $params = array(
+        'main_template_name' => 'Main',
+        'template_name' => 'Body',
+        'data' => $data,
+        'form' => $form
+    );
+    
+    $view->render($params);
   }
 
   public function mySubmitAction()
