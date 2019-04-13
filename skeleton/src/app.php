@@ -20,6 +20,8 @@ $app->logger->setLogDir(__DIR__.'/../log');
 // add for data base
 //$pdo = $app->loadClass('PDO', '\App\Core\\', '/Core/');
 //$app->db = function ($app) use ($pdo) { return $pdo; };
+$dbFactory = new \App\DB\DBFactory($app);
+$app->dbFactory = function ($app) use ($dbFactory) { return $dbFactory; };
 
 // add for i18n
 //$i18n = $app->loadClass('I18n', '\App\Core\\', '/Core/');

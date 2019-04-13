@@ -23,7 +23,6 @@ return array(
       array('url'     => array('get','stuffbyid',array('name'=>'id','regexp'=>'\d+')),
             'methods' => array('get'),
             'formats' => array(),
-            'controller' => 'ExampleController',
             'action'  => 'defaultAction',
             'credentials'     => array('AUTHENTICATED_FULLY'),
       ),
