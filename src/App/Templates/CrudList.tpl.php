@@ -17,7 +17,7 @@
             <th></th>
         </tr>
         </thead>
-        <?php $view->renderPartial('crudFilter', array('model' => $model, 'route_list' => $route_list, 'filter' => $filter, 'fields' => $fields, 'filter_cfg' => $filter_cfg)); ?>
+        <?php $view->renderPartial('crudFilter', array('mapper' => $mapper, 'route_list' => $route_list, 'filter' => $filter, 'fields' => $fields, 'filter_cfg' => $filter_cfg)); ?>
         <tbody>
         <?php foreach ($collection as $entity): ?>
         <tr>

@@ -2,6 +2,8 @@
 
 namespace App\Form;
 
+use App\ApplicationInterfece;
+
 /**
  *
  * @author jb
@@ -9,6 +11,8 @@ namespace App\Form;
  */
 class MinimeForm
 {
+  protected $app;
+  
   protected $csrf_tocken;
 
   protected $name = 'form_default';
@@ -29,8 +33,9 @@ class MinimeForm
       */
   );
 
-  public function __construct($param = array())
+  public function __construct(ApplicationInterfece $app, $param = array())
   {
+    $this->app = $app;
       if (isset($param['form_name'])) {
           $this->name  = $param['form_name'];
       }
@@ -66,6 +71,17 @@ class MinimeForm
     }
     return $err;
   }
+  
+    protected function fixCheckboxes($checkboxes)
+    {
+        foreach ($checkboxes as $checkbox) {
+            if (!isset($this->data[$checkbox])) {
+                $this->data[$checkbox] = 0;
+                continue;
+            }
+            $this->data[$checkbox] = ($this->data[$checkbox] === 'on')? 1: $this->data[$checkbox];
+        }
+    }  
 
   public function bind($data) {
     $this->data = $data;

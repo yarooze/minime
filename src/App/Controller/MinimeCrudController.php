@@ -55,14 +55,17 @@ Abstract Class MinimeCrudController extends BaseController
             $this->app->router->redirect('default', array());
         }
         $view = new $this->viewNameList($this->app);
-        $deleteForm = new $this->formNameDelete(array('form_name' => 'form_crud_delete'));
+        $deleteForm = new $this->formNameDelete($this->app, array('form_name' => 'form_crud_delete'));
         $deleteForm->generateCsrfTocken($this->app->session->getSessionId());
 
-        $filterForm = new $this->formNameDelete(array('form_name' => 'form_crud_filter'));
+        $filterForm = new $this->formNameDelete($this->app, array('form_name' => 'form_crud_filter'));
         $filterForm->generateCsrfTocken($this->app->session->getSessionId());
 
-        $db = $this->app->db;
-        $model = new $this->modelName(array(), $db);
+
+        /** @var DBFactoryInterface $dbFactory */
+        $dbFactory = $this->app->dbFactory;
+        /** @var MapperInterface $userMapper */
+        $mapper = $dbFactory->getMapper($this->modelName);
 
         // pager
         $limit = $this->app->request->getParameter('limit', $this->pagerLimit);
@@ -96,13 +99,13 @@ Abstract Class MinimeCrudController extends BaseController
             }
         }
 
-        $collection = $model->retriveCollection($params);
+        $collection = $mapper->retrieveCollection($params);
 
         $this->renderView($view, array(
             'collection' => $collection,
             'deleteForm' => $deleteForm,
             'filterForm' => $filterForm,
-            'model' => $model,
+            'mapper' => $mapper,
             'fields' => $this->fieldsList,
             'template_name' => $this->templateList,
             'page_name' => $this->pageNameList,
@@ -119,18 +122,21 @@ Abstract Class MinimeCrudController extends BaseController
     public function editAction () {
         $view = new $this->viewNameEdit($this->app);
         $entity_id = $this->app->request->getParameter('id', 0);
-        $db = $this->app->db;
+        /** @var DBFactoryInterface $dbFactory */
+        $dbFactory = $this->app->dbFactory;
         $method = $this->app->request->getMethod();
-        $form = new $this->formNameEdit(array('form_name' => 'form_crud_edit'));
+        $form = new $this->formNameEdit($this->app, array('form_name' => 'form_crud_edit'));
         $form->generateCsrfTocken($this->app->session->getSessionId());
         $flasher = new Flasher($this->app);
         $i18n = $this->app->i18n;
         $entityData = array();
 
-        $model = new $this->modelName(array(), $db);
+        /** @var MapperInterface $mapper */
+        $mapper = $dbFactory->getMapper($this->modelName);
+        $entity = $mapper->createEntity();
         if ($method === 'get') {
             if ($entity_id > 0) {
-                $entityData = $model->retrieveById($entity_id);
+                $entityData = $mapper->retrieveById($entity_id);
             }
             if ($entity_id > 0 && !$entityData) {
                 $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
@@ -154,7 +160,7 @@ Abstract Class MinimeCrudController extends BaseController
                     if (!in_array('EDIT', $this->actions)) {
                         $this->app->router->redirect('default', array());
                     }
-                    $entityData = $model->retrieveById($entity_id);
+                    $entityData = $mapper->retrieveById($entity_id);
                     if (!$entityData) {
                         $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
                         $this->app->router->redirect($this->routeList, array());
@@ -168,11 +174,11 @@ Abstract Class MinimeCrudController extends BaseController
                 foreach ($this->fieldsEdit as $fieldName => $fieldData) {
                     $entityData[$fieldName] = $form->getValue($fieldName);
                 }
-                $model->setFieldsFromArray($entityData);
+                $mapper->setFieldsFromArray($entityData, $entity);
 
-                if ($model->save() && $model->getId()) {
+                if ($mapper->save($entity) && $entity->getId()) {
                     $flasher->add($i18n->trans('ENTITY_SAVED'), Flasher::LVL_NOTICE);
-                    $this->app->router->redirect($this->routeEdit, array('id' => $model->getId()));
+                    $this->app->router->redirect($this->routeEdit, array('id' => $entity->getId()));
                 }
                 $errs['registerError'] = $i18n->trans('ENTITY_NOT_SAVED');
             }
@@ -181,7 +187,7 @@ Abstract Class MinimeCrudController extends BaseController
         $this->renderView($view, array(
             'page_name' => $i18n->trans('EDIT_ENTITY_ID', array('%ENTITY_ID%' => $entity_id)),
             'form' => $form,
-            'model' => $model,
+            'mapper' => $mapper,
             'errs' => $errs,
             'fields' => $this->fieldsEdit,
             'template_name' => $this->templateEdit,
@@ -197,7 +203,8 @@ Abstract Class MinimeCrudController extends BaseController
     public function viewAction () {
         $view = new $this->viewNameEdit($this->app);
         $entity_id = $this->app->request->getParameter('id', 0);
-        $db = $this->app->db;
+        /** @var DBFactoryInterface $dbFactory */
+        $dbFactory = $this->app->dbFactory;
         $method = $this->app->request->getMethod();
         //$form = new $this->formNameEdit(array('form_name' => 'form_crud_edit'));
         //$form->generateCsrfTocken($this->app->session->getSessionId());
@@ -208,13 +215,14 @@ Abstract Class MinimeCrudController extends BaseController
         if ($method !== 'get') {
             $this->app->router->redirect($this->routeList, array());
         }
-        $model = new $this->modelName(array(), $db);
+        /** @var MapperInterface $userMapper */
+        $model = $dbFactory->getMapper($this->modelName);
         $entityData = $model->retrieveById($entity_id);
         if (!$entityData) {
             $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
             $this->app->router->redirect($this->routeList, array());
         }
-        $model->setFieldsFromArray($entityData);
+        //$model->setFieldsFromArray($entityData);
 
         $this->renderView($view, array(
             'page_name' => $i18n->trans('VIEW_ENTITY_ID', array('%ENTITY_ID%' => $entity_id)),
@@ -236,7 +244,8 @@ Abstract Class MinimeCrudController extends BaseController
             $this->app->router->redirect('default', array());
         }
         $entity_id = $this->app->request->getParameter('id', 0);
-        $db = $this->app->db;
+        /** @var DBFactoryInterface $dbFactory */
+        $dbFactory = $this->app->dbFactory;
         $flasher = new Flasher($this->app);
         $form = new $this->formNameDelete(array('form_name' => 'form_crud_delete'));
         $form->generateCsrfTocken($this->app->session->getSessionId());
@@ -252,7 +261,9 @@ Abstract Class MinimeCrudController extends BaseController
             $this->app->router->redirect($this->routeList, array());
         }
 
-        $model = new $this->modelName(array(), $db);
+        /** @var MapperInterface $userMapper */
+        $model = $dbFactory->getMapper($this->modelName);
+        //$model = new $this->modelName(array(), $db);
         if ($entity_id > 0) {
             $entityData = $model->retrieveById($entity_id);
             if (!$entityData) {

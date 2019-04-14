@@ -11,7 +11,7 @@ use App\Core\Container as Container,
  * @author jb
  *
  */
-class MinimeApplication extends Container
+class MinimeApplication extends Container implements ApplicationInterfece
 {
   public function run()
   {
