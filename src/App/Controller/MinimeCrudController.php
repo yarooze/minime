@@ -99,7 +99,7 @@ Abstract Class MinimeCrudController extends BaseController
             }
         }
 
-        $collection = $mapper->retrieveCollection($params);
+        $collection = $mapper->retrieveCollection($params, true);
 
         $this->renderView($view, array(
             'collection' => $collection,
@@ -136,7 +136,7 @@ Abstract Class MinimeCrudController extends BaseController
         $entity = $mapper->createEntity();
         if ($method === 'get') {
             if ($entity_id > 0) {
-                $entityData = $mapper->retrieveById($entity_id);
+                $entityData = $mapper->retrieveById($entity_id, true);
             }
             if ($entity_id > 0 && !$entityData) {
                 $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
@@ -160,7 +160,7 @@ Abstract Class MinimeCrudController extends BaseController
                     if (!in_array('EDIT', $this->actions)) {
                         $this->app->router->redirect('default', array());
                     }
-                    $entityData = $mapper->retrieveById($entity_id);
+                    $entityData = $mapper->retrieveById($entity_id, true);
                     if (!$entityData) {
                         $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
                         $this->app->router->redirect($this->routeList, array());
@@ -217,11 +217,12 @@ Abstract Class MinimeCrudController extends BaseController
         }
         /** @var MapperInterface $userMapper */
         $model = $dbFactory->getMapper($this->modelName);
-        $entityData = $model->retrieveById($entity_id);
+        $entityData = $model->retrieveById($entity_id, true);
         if (!$entityData) {
             $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
             $this->app->router->redirect($this->routeList, array());
         }
+//var_dump($entityData->getTagsHtml());
         //$model->setFieldsFromArray($entityData);
 
         $this->renderView($view, array(
@@ -265,7 +266,7 @@ Abstract Class MinimeCrudController extends BaseController
         $model = $dbFactory->getMapper($this->modelName);
         //$model = new $this->modelName(array(), $db);
         if ($entity_id > 0) {
-            $entityData = $model->retrieveById($entity_id);
+            $entityData = $model->retrieveById($entity_id, true);
             if (!$entityData) {
                 $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
                 $this->app->router->redirect($this->routeList, array());

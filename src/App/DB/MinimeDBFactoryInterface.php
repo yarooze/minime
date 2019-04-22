@@ -4,7 +4,7 @@
 namespace App\DB;
 
 
-interface DBFactoryInterface
+interface MinimeDBFactoryInterface
 {
     public function __construct($app);
 

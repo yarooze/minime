@@ -2,7 +2,7 @@
 
 namespace App\DB;
 
-class MinimePDO implements ConnectionInterface
+class MinimePDO implements MinimeConnectionInterface
 {
 
    /**
