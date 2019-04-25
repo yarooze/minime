@@ -48,4 +48,5 @@ return array(
     'CONFIRM_DELETE' => 'Do you really want to delete?',
     'ENTITY_WITH_ID_DELETED ' => 'Entity [%ENTITY_ID%] was deleted successfully',
     'ARE_YOU_SURE' => 'Are you sure?',
+    'ACTIVE' => 'Active',
 );

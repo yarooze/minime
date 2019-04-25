@@ -61,7 +61,9 @@ abstract class MininimeMapperPDO extends MinimeMapper
             $entity = $this->createEntity();
             $this->setFieldsFromArray($data, $entity);
         }
+
         $validate = $this->validate($entity);
+
         if (!empty($validate)) {
             return $validate;
         }
@@ -72,8 +74,13 @@ abstract class MininimeMapperPDO extends MinimeMapper
                 $this->insert($entity);
             }
         } catch (\Exception $e) {
+            $errs = array('saveError' => 'ENTITY_WAS_NOT_SAVED');
+            if ($this->app->config->get('env') == 'dev') {
+                $errs[] = $e->getMessage();
+            }
             $this->app->logger->log(array(date('Y.m.d H:i:s'), $e->getMessage(), $e));
-            return array('ENTITY_WAS_NOT_SAVED');
+            
+            return $errs;
         }
 
         return true;

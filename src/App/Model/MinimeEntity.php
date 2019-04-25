@@ -41,6 +41,18 @@ abstract class MinimeEntity implements \ArrayAccess
         $this->id = $id;
     }
 
+    public function getData() {
+        $data = array();
+        $maping = $this->mapper->getMapping();
+        
+        foreach ($maping as $fieldMapping) {
+            $getter = 'get'.$fieldMapping['getset'];
+            $data[$fieldMapping['field']] = $this->$getter();
+        }
+        
+        return $data;
+    }
+    
     // ArrayAccess
     public function offsetSet($key, $value)
     {

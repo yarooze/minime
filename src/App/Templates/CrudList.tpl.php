@@ -4,8 +4,20 @@
         <thead>
         <tr>
             <?php foreach ($fields as $fieldName => $fieldData): ?>
-            <?php $fieldName = (isset($fieldData['title'])) ? $i18n->trans($fieldData['title']) : $fieldName; ?>
-                <th scope="col"><?php $view->printString($fieldName); ?></th>
+            <?php $fieldName = (isset($fieldData['title'])) ? $i18n->trans($fieldData['title']) : $fieldName;
+                $orderBy = isset($fieldData['orderby']);
+                $query = $filter;
+                $query['orderby'] = array(array(
+                'name' => $fieldName, 'order' => 'ASC'));
+                ?><th scope="col"><?php if ($orderBy): ?><a href="<?php 
+                echo $app->router->getUrl($route_list, array('query' => $query));
+                ?>">▲</a><?php endif;
+                $view->printString($fieldName);  
+                if ($orderBy): ?><a href="<?php
+                $query['orderby'] = array(array(
+                'name' => $fieldName, 'order' => 'DESC'));
+                echo $app->router->getUrl($route_list, array('query' => $query));
+                ?>">▼</a><?php endif; ?></th>
             <?php endforeach ?>
             <th>
                 <?php if (in_array('CREATE', $actions)): ?>

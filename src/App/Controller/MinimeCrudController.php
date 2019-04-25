@@ -136,9 +136,9 @@ Abstract Class MinimeCrudController extends BaseController
         $entity = $mapper->createEntity();
         if ($method === 'get') {
             if ($entity_id > 0) {
-                $entityData = $mapper->retrieveById($entity_id, true);
+                $entityData = $mapper->retrieveById($entity_id, false);
             }
-            if ($entity_id > 0 && !$entityData) {
+            if ($entity_id > 0 && empty($entityData)) {
                 $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
                 $this->app->router->redirect($this->routeList, array());
             }
@@ -160,8 +160,8 @@ Abstract Class MinimeCrudController extends BaseController
                     if (!in_array('EDIT', $this->actions)) {
                         $this->app->router->redirect('default', array());
                     }
-                    $entityData = $mapper->retrieveById($entity_id, true);
-                    if (!$entityData) {
+                    $entityData = $mapper->retrieveById($entity_id, false);
+                    if (empty($entityData)) {
                         $flasher->add($i18n->trans('NO_ENTITY_WITH_ID', array('%ENTITY_ID%' => $entity_id)), Flasher::LVL_ERROR);
                         $this->app->router->redirect($this->routeList, array());
                     }
@@ -174,13 +174,16 @@ Abstract Class MinimeCrudController extends BaseController
                 foreach ($this->fieldsEdit as $fieldName => $fieldData) {
                     $entityData[$fieldName] = $form->getValue($fieldName);
                 }
-                $mapper->setFieldsFromArray($entityData, $entity);
 
-                if ($mapper->save($entity) && $entity->getId()) {
+                $mapper->setFieldsFromArray($entityData, $entity);
+                $errs = $mapper->save($entity);
+
+                if ($errs === true && $entity->getId()) {
                     $flasher->add($i18n->trans('ENTITY_SAVED'), Flasher::LVL_NOTICE);
                     $this->app->router->redirect($this->routeEdit, array('id' => $entity->getId()));
                 }
-                $errs['registerError'] = $i18n->trans('ENTITY_NOT_SAVED');
+
+                $errs['saveError'] = $i18n->trans('ENTITY_NOT_SAVED');
             }
         }
 

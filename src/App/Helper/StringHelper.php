@@ -29,3 +29,33 @@ if(!function_exists('isUTF8'))
     return (utf8_encode(utf8_decode($string)) == $string);
   }
 }
+
+if(!function_exists('checkBoxSymbol')) {
+    function checkBoxSymbol($value)
+    {
+        return ($value) ? '&#x2611;' : '&#x2610;';
+    }
+}
+
+if(!function_exists('slugify')) {
+    function slugify($string) {
+        $string = transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $string);
+        $string = preg_replace('/[\W]/', '-', $string);
+        return trim($string, '-');
+    }
+}
+
+if(!function_exists('declOfNum')) {
+    /**
+     * Функция склонения числительных в русском языке
+     *
+     * @param int    $number Число которое нужно просклонять
+     * @param array  $titles Массив слов для склонения - array('статья', 'статьи', 'статей')
+     * @return string
+     **/
+    function declOfNum($number, $titles)
+    {
+        $cases = array (2, 0, 1, 1, 1, 2);
+        return $number." ".$titles[ ($number%100 > 4 && $number %100 < 20) ? 2 : $cases[min($number%10, 5)] ];
+    }
+}

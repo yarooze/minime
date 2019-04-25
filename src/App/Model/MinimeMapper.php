@@ -166,6 +166,10 @@ abstract class MinimeMapper implements MapperInterface
         $mapping = isset($this->mapping[$normalized]) ? $this->mapping[$normalized] : null;
         return $mapping;
     }
+    
+    public function getMapping() {
+        return $this->mapping;
+    }
 
     /**
      *
