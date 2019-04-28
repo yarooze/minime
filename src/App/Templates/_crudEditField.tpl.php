@@ -1,5 +1,5 @@
 <?php
-
+$app->loadHelper('HtmlHelper');
 $i18n = $this->app->i18n;
 
 $attr = array(
@@ -16,7 +16,7 @@ $title = (isset($fieldData['title'])) ? $i18n->trans($fieldData['title']) : $fie
 
 if (isset($fieldData['type']) && $fieldData['type'] === 'select'): ?>
     <div class="form-group row">
-        <label for="userId" class="col-sm-2 col-form-label"><?php $view->printString($title); ?></label>
+        <label for="<?php echo $form->getFullFieldName($fieldName); ?>" class="col-sm-2 col-form-label"><?php $view->printString($title); ?></label>
         <div class="col-sm-10">
             <select class="custom-select mr-sm-2 <?php echo (isset($errs[$fieldName])) ? 'is-invalid' : ''; ?>"
                     name="<?php echo $form->getFullFieldName($fieldName); ?>" aria-describedby="<?php $view->printString($fieldName); ?>Help"

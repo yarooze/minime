@@ -118,7 +118,7 @@ abstract class BaseMapperPDO extends BaseMapper
 
             } else {
                 $dbfield = $r_name;
-                $mapping = $this->getMappinfByFieldName($r_name);
+                $mapping = $this->getMappingByFieldName($r_name);
 
                 if ($mapping && isset($mapping['dbfield'])) {
                     $dbfield = $mapping['dbfield'];

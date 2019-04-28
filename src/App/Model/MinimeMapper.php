@@ -47,7 +47,7 @@ abstract class MinimeMapper implements MapperInterface
     public function getId($entity)
     {
         $id_field = $this->id_field;
-        $mapping = $this->getMappinfByFieldName($id_field);
+        $mapping = $this->getMappingByFieldName($id_field);
         if ($mapping === null) {
             throw new \RuntimeException('No mapping for the field [' . $id_field . ']!');
         }
@@ -151,7 +151,7 @@ abstract class MinimeMapper implements MapperInterface
             return;
         }
         foreach ($values as $f_name => $f_value) {
-            $mapping = $this->getMappinfByFieldName($f_name);
+            $mapping = $this->getMappingByFieldName($f_name);
             if ($mapping === null) {
                 //throw new \RuntimeException('No mapping for the field [' . $f_name . ']!');
                 continue;
@@ -161,7 +161,7 @@ abstract class MinimeMapper implements MapperInterface
         }
     }
 
-    public function getMappinfByFieldName($f_name) {
+    public function getMappingByFieldName($f_name) {
         $normalized = strtolower(str_replace('_', '', $f_name));
         $mapping = isset($this->mapping[$normalized]) ? $this->mapping[$normalized] : null;
         return $mapping;

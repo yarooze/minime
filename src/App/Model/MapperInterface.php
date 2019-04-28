@@ -84,8 +84,7 @@ Interface MapperInterface
      */
     public function setFieldsFromArray($values, &$entity);
 
-    /** TODO fix name f->g */
-    public function getMappinfByFieldName($f_name);
+    public function getMappingByFieldName($f_name);
     
     /**  @return array */
     public function getMapping();

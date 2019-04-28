@@ -17,8 +17,8 @@ abstract class MinimeEntity implements \ArrayAccess
         $this->app = $app;
     }
 
-    public function getMappinfByFieldName($name) {
-        $mapping = $this->mapper->getMappinfByFieldName($name);
+    public function getMappingByFieldName($name) {
+        $mapping = $this->mapper->getMappingByFieldName($name);
         if ($mapping === null) {
             throw new \RuntimeException('No mapping for the field [' . $name . ']!');
         }
@@ -59,7 +59,7 @@ abstract class MinimeEntity implements \ArrayAccess
         if (is_null($key) && !isset($this->$key)) {
             return; //$this->storage[] = $value;
         } else {
-            $mapping = $this->getMappinfByFieldName($key);
+            $mapping = $this->getMappingByFieldName($key);
             $setter = 'set' . $mapping['getset'];            
             $this->$setter($value);
             //$this->$key = $value;
@@ -69,7 +69,7 @@ abstract class MinimeEntity implements \ArrayAccess
     public function offsetExists($key)
     {   
         try {
-            $mapping = $this->getMappinfByFieldName($key);
+            $mapping = $this->getMappingByFieldName($key);
         } catch (\Exception $e) {
             return false;
         }
@@ -80,7 +80,7 @@ abstract class MinimeEntity implements \ArrayAccess
  
     public function offsetUnset($key)
     {
-        $mapping = $this->getMappinfByFieldName($key);
+        $mapping = $this->getMappingByFieldName($key);
         $setter = 'set' . $mapping['getset'];            
         $this->$setter(null);
         //unset($this->storage[$key]);
@@ -89,7 +89,7 @@ abstract class MinimeEntity implements \ArrayAccess
     public function offsetGet($key)
     {
         try {
-            $mapping = $this->getMappinfByFieldName($key);
+            $mapping = $this->getMappingByFieldName($key);
         } catch (\Exception $e) {
             return null;
         }

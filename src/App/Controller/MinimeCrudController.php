@@ -64,7 +64,7 @@ Abstract Class MinimeCrudController extends BaseController
 
         /** @var DBFactoryInterface $dbFactory */
         $dbFactory = $this->app->dbFactory;
-        /** @var MapperInterface $userMapper */
+        /** @var MapperInterface $mapper */
         $mapper = $dbFactory->getMapper($this->modelName);
 
         // pager

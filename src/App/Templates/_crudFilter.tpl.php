@@ -1,5 +1,4 @@
 <?php
-//require_once __DIR__.'/../Helper/.php';
 $app->loadHelper('HtmlHelper');
 $i18n = $this->app->i18n;
 /*

@@ -2,6 +2,8 @@
 
 namespace App\DB;
 
+use App\Exception\MinimePDOException;
+
 class MinimePDO implements MinimeConnectionInterface
 {
 
@@ -183,10 +185,15 @@ class MinimePDO implements MinimeConnectionInterface
     protected function prepareStatement($q) {
         $stmtHash = md5($q);
         if (!isset($this->statements[$stmtHash])) {
-            $this->statements[$stmtHash] = array(
-                'q' => $q,
-                'stmt' => $this->getConnection()->prepare($q),
-            );
+            try {
+                $this->statements[$stmtHash] = array(
+                    'q' => $q,
+                    'stmt' => $this->getConnection()->prepare($q),
+                );
+            } catch (\Exception $e) {
+                $this->app->logger->log(array($e, $q));
+                throw new MinimePDOException($e->getMessage());
+            } 
         }
         /** @var \PDOStatement $stmt */
         $this->stmt = $this->statements[$stmtHash]['stmt'];

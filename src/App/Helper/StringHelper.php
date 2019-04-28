@@ -40,17 +40,18 @@ if(!function_exists('checkBoxSymbol')) {
 if(!function_exists('slugify')) {
     function slugify($string) {
         $string = transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $string);
-        $string = preg_replace('/[\W]/', '-', $string);
+        //$string = preg_replace('/[\W]/', '-', $string);
+        $string = preg_replace('/[^A-Za-z0-9\-_]/', '-', $string);
         return trim($string, '-');
     }
 }
 
 if(!function_exists('declOfNum')) {
     /**
-     * Функция склонения числительных в русском языке
+     * Р¤СѓРЅРєС†РёСЏ СЃРєР»РѕРЅРµРЅРёСЏ С‡РёСЃР»РёС‚РµР»СЊРЅС‹С… РІ СЂСѓСЃСЃРєРѕРј СЏР·С‹РєРµ
      *
-     * @param int    $number Число которое нужно просклонять
-     * @param array  $titles Массив слов для склонения - array('статья', 'статьи', 'статей')
+     * @param int    $number Р§РёСЃР»Рѕ РєРѕС‚РѕСЂРѕРµ РЅСѓР¶РЅРѕ РїСЂРѕСЃРєР»РѕРЅСЏС‚СЊ
+     * @param array  $titles РњР°СЃСЃРёРІ СЃР»РѕРІ РґР»СЏ СЃРєР»РѕРЅРµРЅРёСЏ - array('СЃС‚Р°С‚СЊСЏ', 'СЃС‚Р°С‚СЊРё', 'СЃС‚Р°С‚РµР№')
      * @return string
      **/
     function declOfNum($number, $titles)
