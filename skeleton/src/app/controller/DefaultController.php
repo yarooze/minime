@@ -19,7 +19,7 @@ Class DefaultController extends BaseController
 
     $data = $this->app->request->getParameters();
 
-    $form = new RegisterForm();
+    $form = new RegisterForm($this->app);
 
     $params = array(
         'main_template_name' => 'Main',
