@@ -1,6 +1,6 @@
 <?php
 
-namespace app\model;
+namespace App\Model;
 
 
 class User extends DBModel
@@ -91,7 +91,7 @@ class User extends DBModel
      *
      * @inheritDoc
      */
-    public function retrieveCollection(&$params = array())
+    public function retriveCollection(&$params = array())
     {
         $group = isset($params['groupby']) ? $params['groupby'] : array();
         if (!in_array($this->id_field, $group)) {
@@ -100,7 +100,7 @@ class User extends DBModel
         }
         $params['groupby'] = $group;
 
-        return parent::retrieveCollection($params);
+        return parent::retriveCollection($params);
     }
 
     /**
@@ -131,7 +131,7 @@ class User extends DBModel
           FROM `' . $this->tablename . '` AS ' . $this->alias . '          
           WHERE ( `login` = :login OR `email` = :email ) AND `id` <> :id 
           ;';
-        $stmt = $this->getConnection()->prepareStatement($q);
+        $stmt = $this->getDb()->prepareStatement($q);
         if ($stmt->execute(array(':login' => $this->login, ':email' => $this->email, ':id' => $this->id))) {
             $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
@@ -162,7 +162,7 @@ class User extends DBModel
         try {
             // delete old connections
 //            $q_delete = 'DELETE FROM `credentials` WHERE user_id = :user_id ';
-//            $stmt = $this->getConnection()->prepareStatement($q_delete);
+//            $stmt = $this->getDb()->prepareStatement($q_delete);
 //            $stmt->execute(array(':user_id' => $this->getId()));
 //
 //            // add new connections if any
@@ -182,7 +182,7 @@ class User extends DBModel
 //            $q_insert = 'INSERT INTO `credentials` ' .
 //                ' ( user_id, credentials ) VALUES ' .
 //                $values_part .' ;';
-//            $stmt = $this->getConnection()->prepareStatement($q_insert);
+//            $stmt = $this->getDb()->prepareStatement($q_insert);
 //            $stmt->execute($q_insert_params);
         } catch (\Exception $e) {
             return false;
@@ -200,7 +200,7 @@ class User extends DBModel
             ' ( active, is_admin, login, email, password ) VALUES ' .
             '( :active, :is_admin, :login, :email, :password );';
 
-        $stmt = $this->getConnection()->prepareStatement($q);
+        $stmt = $this->getDb()->prepareStatement($q);
         $stmt->execute(array(
             ':active' => $this->getActive(),
             ':is_admin' => $this->getIsAdmin(),
@@ -221,7 +221,7 @@ class User extends DBModel
             ' active=:active, is_admin=:is_admin, login=:login, email=:email, password=:password ' .
             ' WHERE '.$this->alias.'.'.$this->id_field.' = :id;';
 
-        $stmt = $this->getConnection()->prepareStatement($q);
+        $stmt = $this->getDb()->prepareStatement($q);
 
         $stmt->execute(array(
             ':id' => $this->getId(),
