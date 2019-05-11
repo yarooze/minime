@@ -17,6 +17,7 @@
  *     ),
  * )
  */
+define("PATH_TO_WEB_DIR", '');
 return array(
   //
       'getStuffById' =>
@@ -31,7 +32,7 @@ return array(
       array('url'        => array('register'),
           'methods'    => array('get'),
           'formats'    => array('html'),
-          'controller' => 'DefaultController',
+          'controller' => 'ExampleController',
           'action'     => 'defaultAction',
           'credentials'     => array('*'),
       ),
@@ -39,7 +40,7 @@ return array(
       array('url'        => array('register','submit'),
           'methods'    => array('post'),
           'formats'    => array('html'),
-          'controller' => 'DefaultController',
+          'controller' => 'ExampleController',
           'action'     => 'mySubmitAction',
           'credentials'     => array('*'),
       ),
@@ -47,7 +48,7 @@ return array(
       array('url'        => array('register','success'),
           'methods'    => array('get'),
           'formats'    => array('html'),
-          'controller' => 'DefaultController',
+          'controller' => 'ExampleController',
           'action'     => 'myRegisterSuccessAction',
           'credentials'     => array('*'),
       ),
@@ -89,7 +90,7 @@ return array(
       array('url'     => array(),
             'methods' => array(),
             'formats' => array(),
-            'controller' => 'DefaultController',
+            'controller' => 'ExampleController',
             'action'  => 'defaultAction',
             'credentials'     => array('*'),
       ),
