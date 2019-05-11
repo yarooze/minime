@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Exception\UnknownRouteException;
+use app\exception\UnknownRouteException;
 
 /**
  *
