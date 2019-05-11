@@ -1,5 +1,5 @@
 {
-    "name": "yarooze/minime",
+    "name": "Yarooze/Minime",
     "license": "Public Domain",
     "authors": [
         {
@@ -8,7 +8,7 @@
     ],
     "autoload": {
         "psr-4": {
-          "app\\": "src/app"
+          "App\\": "src/App"
         }
     }
 }

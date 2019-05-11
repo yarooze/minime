@@ -13,7 +13,7 @@ HowTo
 
 2. Copy files from the "skeleton" dir into your project root dir
 
-3. Overwrite base classes in "/src/app/" as you wish.
+3. Overwrite base classes in "/src/App/" as you wish.
 
 4. set up your stuff in "src/app.php" and configure in "/config/*"
 
@@ -58,17 +58,17 @@ garampel
 ├───internal  <-- entry point to use your app as internal service
 ├───log  <-- internal log directory if you don't use global logs directory
 ├───src  <-- your app is here
-│   └───app
-│       ├───controller
-│       ├───core
-│       ├───exception
-│       ├───form
-│       ├───helper
-│       ├───model
-│       ├───security
-│       ├───service
-│       ├───templates
-│       └───view
+│   └───App
+│       ├───Controller
+│       ├───Core
+│       ├───Exception
+│       ├───Form
+│       ├───Helper
+│       ├───Model
+│       ├───Security
+│       ├───Service
+│       ├───Templates
+│       └───View
 ├───vendor  <-- vendor stuff (usually installed by composer)
 └───web <-- apache DocumentRoot is here
     └───assets

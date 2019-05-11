@@ -1,5 +1,5 @@
 {
-    "name": "yarooze/test",
+    "name": "Yarooze/Test",
     "license": "Public Domain",
     "require": {        
         "yarooze/minime": "dev-master"
@@ -17,7 +17,7 @@
     ],
     "autoload": {
         "psr-4": {
-          "app\\": "src/app"
+          "App\\": "src/App"
         }
     }
 }

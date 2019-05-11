@@ -1,4 +1,4 @@
 <?php
 return array(
-    'MSG' => 'This is a message in english.'
+    'MESSAGE' => 'This is a message in english.'
 );
