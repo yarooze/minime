@@ -17,6 +17,7 @@
  *     ),
  * )
  */
+define("PATH_TO_WEB_DIR", '');
 return array(
   //
       'getStuffById' =>
