@@ -7,5 +7,5 @@ namespace app\view;
  */
 Class DefaultView extends BaseView
 {
-  protected $template_name = '/../Templates/Default.tpl.php';
+  protected $template_name = 'Default';
 }
