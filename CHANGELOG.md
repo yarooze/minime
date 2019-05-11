@@ -1,5 +1,9 @@
 # Changelog
 
+## v4.0.0 2019-04-11
+- Namespaces in lowercase
+- New model
+
 ## v2.9.0 2014-11-14
 
 - twittee is back in "core", but the whole minime framework is in "vendor" and can be updated with composer

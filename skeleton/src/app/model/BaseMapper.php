@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Model;
-
 
 /**
  * Base class for data base records

@@ -3,7 +3,6 @@ namespace App\Security;
 
 use App\Model\User;
 
-
 /**
  *
  * @author jb

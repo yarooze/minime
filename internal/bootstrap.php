@@ -1,5 +1,7 @@
 <?php
-
+/**
+ *
+ */
 $cfg = require __DIR__.'/../config/config_app.php';
 
 $cfg['env'] = 'internal';

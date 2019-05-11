@@ -41,19 +41,37 @@ abstract class MinimeMapper implements MapperInterface
      */
     protected $mapping = array();
 
+    public function getIdField()
+    {
+        return $this->id_field;
+    }
+
     /**
      * @return mixed
      */
     public function getId($entity)
     {
-        $id_field = $this->id_field;
-        $mapping = $this->getMappingByFieldName($id_field);
-        if ($mapping === null) {
-            throw new \RuntimeException('No mapping for the field [' . $id_field . ']!');
+        if (is_array($this->id_field)) {
+            $id = arary();
+            foreach ($this->id_field as $id_field) {
+                $mapping = $this->getMappingByFieldName($id_field);
+                if ($mapping === null) {
+                    throw new \RuntimeException('No mapping for the field [' . $id_field . ']!');
+                }
+                $getter = 'get' . $mapping['getset'];
+                
+                $id[$id_field] = $entity->$getter();
+            } 
+        } else {
+          $mapping = $this->getMappingByFieldName($id_field);
+          if ($mapping === null) {
+              throw new \RuntimeException('No mapping for the field [' . $id_field . ']!');
+          }
+          $getter = 'get' . $mapping['getset']; 
+          $id = $entity->$getter();
         }
-        $getter = 'get' . $mapping['getset'];
 
-        return $entity->$getter();
+        return $id;
     }
 
     /**

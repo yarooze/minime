@@ -1,5 +1,7 @@
 <?php
-
+/**
+ *
+ */
 $cfg = require __DIR__.'/../config/config_app.php';
 $cfg['APP_ROOT_DIR'] = __DIR__.'/../';
 

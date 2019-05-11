@@ -22,7 +22,23 @@
             <th>
                 <?php if (in_array('CREATE', $actions)): ?>
                 <a class="btn btn-primary"
-                   href="<?php echo $app->router->getUrl($route_edit, array('id' => 0)); ?>"><?php echo $i18n->trans('NEW_ENTITY'); ?>
+                   href="<?php 
+                        $route_params = array();
+                        $id_field = $mapper->getIdField();
+                        if (is_array($id_field)) {
+                            foreach ($id_field as $id_field_part) {
+                                $route_params = array($id_field_part => 0);
+                            }
+//var_dump(array($id_field, $route_params));
+//die();                            
+                        } else {
+                            $route_params[$id_field] = 0;
+                        }
+
+                echo $app->router->getUrl($route_edit, $route_params); 
+                
+                
+                ?>"><?php echo $i18n->trans('NEW_ENTITY'); ?>
                 <?php endif; ?>
             </th>
             <th></th>
