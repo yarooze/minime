@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace app;
 
-use App\Core\Container as Container,
-    App\Exception\MinimeException as MinimeException,
-    App\Exception\UnknownRouteException as UnknownRouteException;
+use app\core\Container as Container,
+    app\exception\MinimeException as MinimeException,
+    app\exception\UnknownRouteException as UnknownRouteException;
 
 /**
  *

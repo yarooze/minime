@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace app;
 
-use App\Exception\UnknownRouteException;
+use app\exception\UnknownRouteException;
 
 /**
  *

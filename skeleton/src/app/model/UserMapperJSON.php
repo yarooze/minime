@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace app\model;
 
 
 class UserMapperJSON //extends BaseMapperJSON

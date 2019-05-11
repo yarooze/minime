@@ -1,5 +1,5 @@
 <?php
-namespace App\DB;
+namespace app\db;
 
 /**
  *

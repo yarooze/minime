@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace app\model;
 
 
 abstract class MinimeEntity implements \ArrayAccess

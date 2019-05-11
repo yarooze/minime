@@ -6,7 +6,7 @@
  * @see http://twittee.org/
  */
 
-namespace App\Core;
+namespace app\core;
 
 class Container
 {

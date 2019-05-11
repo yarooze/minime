@@ -1,7 +1,7 @@
 <?php
-namespace App\Core;
+namespace app\core;
 
-use App\Exception\MinimeException;
+use app\exception\MinimeException;
 
 /**
  *

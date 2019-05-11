@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Core;
+namespace app\core;
 
-use App\Exception\MinimeException;
-use App\Exception\UnknownRouteException;
-use App\Security\MinimeAuth;
+use app\exception\MinimeException;
+use app\exception\UnknownRouteException;
+use app\security\MinimeAuth;
 
 /**
  *

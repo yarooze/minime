@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Controller;
+namespace app\controller;
 
-use App\Core\I18n;
-use App\DB\DBFactoryInterface;
-use App\DB\PDO;
-use App\Model\MapperInterface;
-use App\View\DefaultView as DefaultView,
-    App\View\HtmlView as HtmlView,
-    App\Form\MyRegisterForm as RegisterForm;
+use app\core\I18n;
+use app\db\DBFactoryInterface;
+use app\db\PDO;
+use app\model\MapperInterface;
+use app\view\DefaultView as DefaultView,
+    app\view\HtmlView as HtmlView,
+    app\form\MyRegisterForm as RegisterForm;
 
 /**
  *

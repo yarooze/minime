@@ -1,7 +1,7 @@
 <?php
-namespace App\Security;
+namespace app\security;
 
-use App\Model\User;
+use app\model\User;
 
 /**
  *

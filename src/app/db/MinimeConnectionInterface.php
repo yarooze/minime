@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\DB;
+namespace app\db;
 
 
 interface MinimeConnectionInterface

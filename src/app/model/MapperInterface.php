@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Model;
+namespace app\model;
 
 
-use App\Application;
+use app\Application;
 
 /**
  * Interface for Mappers

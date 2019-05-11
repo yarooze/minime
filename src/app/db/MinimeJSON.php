@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\DB;
+namespace app\db;
 
 
 class MinimeJSON implements MinimeConnectionInterface

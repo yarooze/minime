@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\DB;
+namespace app\db;
 
 
-use App\Exception\MinimeException;
+use app\exception\MinimeException;
 
 class DBFactory implements DBFactoryInterface
 {

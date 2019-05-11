@@ -1,12 +1,12 @@
 <?php
-namespace App\Core;
+namespace app\core;
 
 /**
  *
  * @author jb
  *
  */
-use App\Exception\MinimeException;
+use app\exception\MinimeException;
 
 class MinimeConfig
 {

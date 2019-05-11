@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Model;
+namespace app\model;
 
-use \App\Core\MinimePDO as PDO;
+use \app\core\MinimePDO as PDO;
 
 /**
  * Base class for data base records

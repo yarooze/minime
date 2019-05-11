@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace app\controller;
 
-use App\Core\Flasher;
+use app\core\Flasher;
 
 /**
  *

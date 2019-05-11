@@ -1,7 +1,6 @@
 <?php
 
-
-namespace App\DB;
+namespace app\db;
 
 
 class JSON implements ConnectionInterface

@@ -1,5 +1,5 @@
 <?php
-namespace App\Core;
+namespace app\core;
 
 if (!function_exists('getallheaders'))
 {

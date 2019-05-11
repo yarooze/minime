@@ -1,7 +1,5 @@
 <?php
-namespace App\View;
-
-// require_once __DIR__.'/BaseView.php';
+namespace app\view;
 
 /**
  *
@@ -9,7 +7,7 @@ namespace App\View;
  */
 Class MinimeJsonView extends BaseView
 {
-  protected $template_name = '/../Templates/Json.tpl.php';
+  protected $template_name = 'Json';
 
   protected function prepareHeaders()
   {
@@ -23,7 +21,7 @@ Class MinimeJsonView extends BaseView
   public function render($params) {
     if ($this->app->request->getParameter('jsonp')) {
       $params['jsonp']     = $this->app->request->getParameter('jsonp');
-      $this->template_name = '/../Templates/Jsonp.tpl.php';
+      $this->template_name = 'Jsonp';
     }
     parent::render($params);
   }

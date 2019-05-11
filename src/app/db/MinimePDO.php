@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DB;
+namespace app\db;
 
-use App\Exception\MinimePDOException;
+use app\exception\MinimePDOException;
 
 class MinimePDO implements MinimeConnectionInterface
 {

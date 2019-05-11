@@ -1,5 +1,5 @@
 <?php
-namespace App\View;
+namespace app\view;
 
 //require_once __DIR__.'/BaseView.php';
 
