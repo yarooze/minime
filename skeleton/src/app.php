@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace app;
 
 $app = new Application(); // Create the application
 
