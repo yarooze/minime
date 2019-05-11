@@ -1,5 +1,5 @@
 {
-    "name": "Yarooze/Test",
+    "name": "yarooze/test",
     "license": "Public Domain",
     "require": {        
         "yarooze/minime": "dev-master"
