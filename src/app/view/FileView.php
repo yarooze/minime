@@ -7,7 +7,7 @@ use app\core\HttpCache as HttpCache;
  *
  * @author jb
  */
-Class FileView extends BaseView
+Class FileView extends MinimeBaseView
 {
   protected $template_name = 'File';
 
@@ -41,6 +41,7 @@ Class FileView extends BaseView
     $lastModifiedTimestamp = filemtime($filename);
     $maxAge = 604800;
     HttpCache::init($lastModifiedTimestamp, $maxAge);
+    $this->sendHeaders();
     parent::render($params);
   }
 }

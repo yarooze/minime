@@ -5,7 +5,7 @@ namespace app\security;
  *
  * @author jb
  */
-Abstract Class BaseUser // extends MinimeUser
+Abstract Class BaseUser extends MinimeUser
 {
 }
 

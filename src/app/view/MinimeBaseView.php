@@ -89,12 +89,33 @@ Abstract Class MinimeBaseView
      * @param string $partial - partial's name (without "_")
      * @param array  $params  - variables for the partial
      */
-    abstract public function renderPartial($partial, $params);
+    //abstract public function renderPartial($partial, $params);
+    public function renderPartial($partial, $params) {
+        $app = $this->app;
+        $view = $this;
+        extract($params);
+
+        $templateDir = $this->getTemplateDir();
+        if (!file_exists ($templateDir . '_'.$partial.'.tpl.php')) {
+            $templateDir = parent::getTemplateDir();
+        }
+        include $templateDir . '_'.$partial.'.tpl.php';
+    }
 
     /**
      * renders the template
      *
      * @param array  $params  - variables for the template
      */
-    abstract public function render($params);
+    //abstract public function render($params);
+    public function render($params)
+    {
+        $this->sendHeaders();
+
+        if ($this->main_template_name === null) {           
+            $this->renderTemplate($this->template_name, $params);
+        } else { // Render main template first. View template will be inserted in it.
+            $this->renderTemplate($this->main_template_name, $params);
+        }
+    }
 }
