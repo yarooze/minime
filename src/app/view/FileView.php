@@ -35,7 +35,6 @@ Class FileView extends MinimeBaseView
     //parent::prepareHeaders();
   }
 
-
   public function render($params) {
     $filename = $params['filename'];
     $lastModifiedTimestamp = filemtime($filename);
