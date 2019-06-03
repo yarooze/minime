@@ -11,7 +11,7 @@ Abstract Class BaseView extends MinimeBaseView
      * Call it with parent:: to get parent templates
      */
     public function getTemplateDir () {
-        return __DIR__.'/../Templates/';
+        return __DIR__.'/../templates/';
     }
 
     /**
