@@ -5,7 +5,7 @@ namespace app\view;
  *
  * @author jb
  */
-Class MinimeJsonView extends BaseView
+Class JsonView extends BaseView
 {
   protected $template_name = 'Json';
 
