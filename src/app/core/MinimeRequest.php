@@ -44,7 +44,7 @@ Class MinimeRequest
     $this->app        = $app;
     $this->uri        = strtolower($_SERVER['REQUEST_URI']);
     $this->method     = strtolower($_SERVER['REQUEST_METHOD']);
-    $this->remoteHost = key_exists('REMOTE_ADDR', $_SERVER) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
+    $this->remoteHost = $this->get_client_ip_server('0.0.0.0'); // key_exists('REMOTE_ADDR', $_SERVER) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
     $this->parameters = $_REQUEST;
 
     if ((!empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https') ||
@@ -58,6 +58,27 @@ Class MinimeRequest
     //set in Router::matchRoute()
     //$this->findFormat();
   }
+
+    // Function to get the client ip address
+    public function get_client_ip_server($default = 'UNKNOWN') {
+        $ipaddress = '';
+        if (isset($_SERVER['HTTP_CLIENT_IP']) && $_SERVER['HTTP_CLIENT_IP'])
+            $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'])
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED']) && $_SERVER['HTTP_X_FORWARDED'])
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+        else if(isset($_SERVER['HTTP_FORWARDED_FOR']) && $_SERVER['HTTP_FORWARDED_FOR'])
+            $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_FORWARDED']) && $_SERVER['HTTP_FORWARDED'])
+            $ipaddress = $_SERVER['HTTP_FORWARDED'];
+        else if(isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'])
+            $ipaddress = $_SERVER['REMOTE_ADDR'];
+        else
+            $ipaddress = $default;
+
+        return $ipaddress;
+    }
 
   /**
    *
