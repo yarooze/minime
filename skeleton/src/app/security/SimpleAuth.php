@@ -77,7 +77,7 @@ Class SimpleAuth extends BaseAuth
     {
         return true;
 //        $user = $this->app->session->get('user', null);
-//        if(!$user)
+//        if(!$user || get_class($user) === '__PHP_Incomplete_Class')
 //        {
 //            $user = new SecurityUser();
 //            $user->setId($this->app->session->getSessionId());
