@@ -26,7 +26,7 @@ class MinimeApplication extends Container implements ApplicationInterfece
       throw new UnknownRouteException('Unknown route!');
     }
 
-    $controller = $this->loadClass($this->router->getControllerName(), '\App\Controller\\', '/Controller/');
+    $controller = $this->loadClass($this->router->getControllerName(), '\app\controller\\', '/controller/');
     $this->controller  = function ($app) use ($controller) {
       return $controller;
     };
@@ -63,7 +63,7 @@ class MinimeApplication extends Container implements ApplicationInterfece
         $root_dir = $this->config->get('APP_ROOT_DIR');
 
         $class = null;
-        $file = $root_dir.'/src/App/'.$path.$classname.'.php';
+        $file = $root_dir.'/src/app/'.$path.$classname.'.php';
         if(!is_file($file))
         {
             $file = __DIR__.$path.$classname.'.php';
@@ -92,13 +92,13 @@ class MinimeApplication extends Container implements ApplicationInterfece
 
     if(!is_file($file))
     {
-        $file = __DIR__.'/Helper/'.$helpername.'.php';
+        $file = __DIR__.'/helper/'.$helpername.'.php';
     }
     if(!is_file($file))
     {      
-        throw new MinimeException('Helper ['.$helpername.' in '.__DIR__.'/Helper/'.'] not found!');
+        throw new MinimeException('Helper ['.$helpername.' in '.__DIR__.'/helper/'.'] not found!');
     }
 
-    require_once __DIR__.'/Helper/'.$helpername.'.php';    
+    require_once __DIR__.'/helper/'.$helpername.'.php';    
   }
 }
