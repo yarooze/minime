@@ -11,13 +11,13 @@ use app\exception\MinimeException;
 class MinimeSession
 {
   /**
-   * @var \App\Application
+   * @var \app\Application
    */
   protected $app = null;
 
   protected $id = null;
 
-  public function __construct(\App\Application $app)
+  public function __construct(\app\Application $app)
   {
     if (!isset($_SESSION)) {session_start();}
     $this->app = $app;

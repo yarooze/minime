@@ -11,7 +11,7 @@ use app\exception\MinimeException;
 class MinimeConfig
 {
   /**
-   * @var \App\Application
+   * @var \app\Application
    */
   protected $app = null;
 
@@ -24,7 +24,7 @@ class MinimeConfig
     'env'     => 'prod',
   );
 
-  public function __construct(\App\Application $app)
+  public function __construct(\app\Application $app)
   {
     $this->app = $app;
   }

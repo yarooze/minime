@@ -8,7 +8,7 @@ namespace app\view;
 Abstract Class MinimeBaseView
 {
     /**
-     * @var \App\Application
+     * @var \app\Application
      */
     protected $app = null;
 
@@ -31,7 +31,7 @@ Abstract Class MinimeBaseView
 
     protected $headers = array();
 
-    public function __construct(\App\Application $app)
+    public function __construct(\app\Application $app)
     {
         $this->app = $app;
         $this->prepareHeaders();

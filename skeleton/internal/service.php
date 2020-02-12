@@ -8,7 +8,7 @@
  */
 
 /**
- * @return \App\Application
+ * @return \app\Application
  */
 if(!function_exists('getMiniApp'))
 {

@@ -39,7 +39,7 @@ class MinimeDBFactory implements MinimeDBFactoryInterface
 
         $connection = $this->getConnection($connectionType);
 
-        $mapperName =  'App\Model\\'.$entityName.'Mapper'.$connectionType;
+        $mapperName =  'app\model\\'.$entityName.'Mapper'.$connectionType;
         $mapper = new $mapperName($this->app, $connection);
 
         return $mapper;
@@ -60,7 +60,7 @@ class MinimeDBFactory implements MinimeDBFactoryInterface
         if ($connectionCfg === null) {
             throw new MinimeException('Missing configuration for connection ' . $connectionType);
         }
-        $connectionName = 'App\DB\\'.$connectionType;
+        $connectionName = 'app\db\\'.$connectionType;
         if (!isset($this->connections[$connectionName])) {
             $this->connections[$connectionName] = new $connectionName($this->app, $connectionCfg);
         }

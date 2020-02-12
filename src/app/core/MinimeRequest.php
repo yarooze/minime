@@ -8,7 +8,7 @@ namespace app\core;
 Class MinimeRequest
 {
   /**
-   * @var \App\Application
+   * @var \app\Application
    */
   protected $app = null;
   /**
@@ -39,7 +39,7 @@ Class MinimeRequest
    */
   protected $parameters = array();
 
-  public function __construct(\App\Application $app)
+  public function __construct(\app\Application $app)
   {
     $this->app        = $app;
     $this->uri        = strtolower($_SERVER['REQUEST_URI']);

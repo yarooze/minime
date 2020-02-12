@@ -92,7 +92,7 @@ abstract class MinimeMapper implements MapperInterface
 
     public function createEntity()
     {
-        $entittyName =  'App\Model\\'.$this->entityname.'Entity';
+        $entittyName =  'app\model\\'.$this->entityname.'Entity';
         return new $entittyName($this, $this->app);
     }
 

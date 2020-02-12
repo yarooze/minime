@@ -23,13 +23,13 @@ class MinimeLogger
    const LOG_LVL_ERR  = 3;
 
   /**
-   * @var \App\Application
+   * @var \app\Application
    */
   protected $app = null;
 
   protected $logDir = '';
 
-  public function __construct(\App\Application $app)
+  public function __construct(\app\Application $app)
   {
     $this->app = $app;
     //$this->log = $app->cfg['log'];

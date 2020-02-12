@@ -19,7 +19,7 @@ Class MinimeRouter
      */
     protected $request_uri = null;
     /**
-     * @var \App\Application
+     * @var \app\Application
      */
     protected $app = null;
     /**
@@ -38,7 +38,7 @@ Class MinimeRouter
      */
     protected $current_route_name = null;
 
-    public function __construct(\App\Application $app)
+    public function __construct(\app\Application $app)
     {
         $this->app = $app;
         $this->routing = $app->cfg['routing'];

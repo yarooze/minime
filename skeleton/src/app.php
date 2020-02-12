@@ -17,13 +17,13 @@ $app->logger  = function ($app) use ($logger) { return $logger; };
 $app->logger->setLogDir(__DIR__.'/../log');
 
 // add for data base
-//$pdo = new \App\Core\PDO($app);
+//$pdo = new \app\core\PDO($app);
 //$app->db = function ($app) use ($pdo) { return $pdo; };
 $dbFactory = new \app\db\DBFactory($app);
 $app->dbFactory = function ($app) use ($dbFactory) { return $dbFactory; };
 
 // add for i18n
-//$i18n = $app->loadClass('I18n', '\App\Core\\', '/Core/');
+//$i18n = $app->loadClass('I18n', '\app\core\\', '/core/');
 $i18n = new \app\core\I18n($app);
 $app->i18n = function ($app) use ($i18n) { return $i18n; };
 

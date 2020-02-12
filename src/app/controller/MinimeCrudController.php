@@ -13,15 +13,15 @@ Abstract Class MinimeCrudController extends BaseController
     protected $actions = array('LIST', 'VIEW', 'CREATE', 'EDIT', 'DELETE');
 
     /**
-     * Full model class name (e.g. 'App\Model\User')
+     * Full model class name (e.g. 'app\model\User')
      *
      * @var string|null
      */
     protected $modelName = null;
 
-    protected $viewNameList = 'App\View\MinimeCrudView';
-    protected $viewNameEdit = 'App\View\MinimeCrudView';
-    protected $viewNameView = 'App\View\MinimeCrudView';
+    protected $viewNameList = 'app\view\MinimeCrudView';
+    protected $viewNameEdit = 'app\view\MinimeCrudView';
+    protected $viewNameView = 'app\view\MinimeCrudView';
 
     protected $templateList = 'CrudList';
     protected $templateEdit = 'CrudEdit';
@@ -31,9 +31,9 @@ Abstract Class MinimeCrudController extends BaseController
     protected $pageNameEdit = 'Edit';
     protected $pageNameView = 'View';
 
-    protected $formNameFilter = 'App\Form\BaseForm';
-    protected $formNameEdit = 'App\Form\BaseForm';
-    protected $formNameDelete = 'App\Form\BaseForm';
+    protected $formNameFilter = 'app\form\BaseForm';
+    protected $formNameEdit = 'app\form\BaseForm';
+    protected $formNameDelete = 'app\form\BaseForm';
 
     protected $routeList = '{crud}List';
     protected $routeEdit = '{crud}Edit';
