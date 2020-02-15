@@ -40,6 +40,11 @@ class MinimeLogger
     $this->logDir = $logDir;
   }
 
+  public function getLogDir()
+  {
+    return $this->logDir;
+  }
+
   public function log($msg, $type = self::LOG_TYPE_STD, $lvl=self::LOG_LVL_INFO) {
 
    $env = $this->app->config->get('env');
