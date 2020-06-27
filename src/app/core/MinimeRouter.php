@@ -191,6 +191,16 @@ Class MinimeRouter
         return in_array('*', $credentials);
     }
 
+    public function getProtocol()
+    {        
+        return 'http' . (isset($_SERVER['HTTPS']) ? 's' : '');
+    }    
+
+    public function getHost()
+    {        
+        return $_SERVER['HTTP_HOST'];
+    }        
+    
     public function getUrl($routeName, $params = array(), $global = false)
     {
 
@@ -219,9 +229,9 @@ Class MinimeRouter
         if (array_key_exists('query', $params)) {
             $location .= '?' . http_build_query($params['query']);
         }
-
+        
         if ($global) {
-            $location = "http://" . $_SERVER['HTTP_HOST'] . $location;
+            $location = $this->getProtocol(). '://' . $this->getHost() . $location;
         }
 
         return $location;
