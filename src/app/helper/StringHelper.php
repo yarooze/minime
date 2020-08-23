@@ -29,3 +29,10 @@ if(!function_exists('isUTF8'))
     return (utf8_encode(utf8_decode($string)) == $string);
   }
 }
+
+if(!function_exists('checkBoxSymbol')) {
+    function checkBoxSymbol($value)
+    {
+        return ($value) ? '&#x2611;' : '&#x2610;';
+    }
+}

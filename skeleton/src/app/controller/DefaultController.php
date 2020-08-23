@@ -3,7 +3,10 @@ namespace app\controller;
 
 use app\view\DefaultView as DefaultView,
     app\view\HtmlView as HtmlView,
-    app\form\MyRegisterForm as RegisterForm;
+    app\form\RegisterForm as RegisterForm,
+    app\form\LoginForm as LoginForm,
+    app\core\Logger as Logger,
+    app\security\SimpleAuth as Auth;
 
 /**
  *
@@ -11,53 +14,29 @@ use app\view\DefaultView as DefaultView,
  */
 Class DefaultController extends BaseController
 {
-  public function defaultAction()
-  {
-    //$view = new DefaultView($this->app);
-    $view = new HtmlView($this->app);
-    
+    public function defaultAction()
+    {
+        if (!$this->app->auth->isAuthenticated()) {
+            $this->app->router->redirect('login');
+        }
 
-    $data = $this->app->request->getParameters();
+        //$view = new DefaultView($this->app);
+        $view = new HtmlView($this->app);
 
-    $form = new RegisterForm($this->app);
 
-    $params = array(
-        'main_template_name' => 'Main',
-        'template_name' => 'Body',
-        'data' => $data,
-        'form' => $form
-    );
-    
-    $view->render($params);
-  }
+        $data = $this->app->request->getParameters();
 
-  public function mySubmitAction()
-  {
-//     $view = new DefaultView($this->app);
-//     $form = new MyRegisterForm();
-//     $data = $this->app->request->getParameter($form->getName(), array());
-//     $form->bind($data);
-//     $errs = $form->getErrors();
+        //$form = new RegisterForm($this->app);
+        // $form = new LoginForm($this->app);
 
-//     //no errors - proceed
-//     if(empty($errs)) {
-//       $user = new User();
-//       $user->setName($data['name']);
-//       $user->setMail($data['mail']);
-//       $user->setPassword($data['pwd1']);
-//       if ($user->save()) {
-//         $this->app->router->redirect('MyRegisterSuccess', array());
-//       }
-//       $errs['registerError'] = 'Your registration was not possible!';
-//     }
+        $params = array(
+            'page_name' => 'default',
+            'main_template_name' => 'Main',
+            'template_name' => 'Default',
+            'data' => $data,
+            //'form' => $form
+        );
 
-//     $view->render(array('form' => $form, 'errs'=>$errs));
-  }
-
-  public function myRegisterSuccessAction() {
-//     $view = new DefaultView($this->app);
-//     $data = $this->app->request->getParameters();
-
-//     $view->render(array('registerSuccess' => true,'preview'=>$preview));
-  }
+        $view->render($params);
+    }
 }

@@ -6,6 +6,8 @@ namespace app\model;
 class UserMapperPDO extends BaseMapperPDO
 {
 
+    protected $entityname = 'User';
+
     protected $id_field  = 'id';
 
     protected $app  = null;
@@ -15,45 +17,29 @@ class UserMapperPDO extends BaseMapperPDO
      */
     protected $mapping = array(
         'id' => array(
-            'getset' => 'Id',
-            'field' => 'id',
             'dbfield' => 'id',
         ),
         'active' => array(
-            'getset' => 'Active',
-            'field' => 'active',
             'dbfield' => 'active',
         ),
         'login' => array(
-            'getset' => 'Login',
-            'field' => 'login',
             'dbfield' => 'login',
         ),
         'email' => array(
-            'getset' => 'Email',
-            'field' => 'email',
             'dbfield' => 'email',
         ),
         'password' => array(
-            'getset' => 'Password',
-            'field' => 'password',
             'dbfield' => 'password',
         ),
         'created' => array(
-            'getset' => 'Created',
-            'field' => 'created',
             'dbfield' => 'created',
         ),
         'updated' => array(
-            'getset' => 'Updated',
-            'field' => 'updated',
             'dbfield' => 'updated',
         ),
-//        'credentials' => array(
-//            'getset' => 'Credentials',
-//            'field' => 'credentials',
-//            'dbfield' => 'credentials',
-//        ),
+        'credentials' => array(
+            'dbfield' => 'credentials',
+        ),
     );
 
     public function __construct($app, $con = null)
@@ -100,13 +86,12 @@ class UserMapperPDO extends BaseMapperPDO
           FROM `' . $this->tablename . '` AS ' . $this->alias . '          
           WHERE ( `login` = :login OR `email` = :email ) AND `id` <> :id 
           ;';
-        $stmt = $this->getConnection()->prepareStatement($q);
-        if ($stmt->execute(array(
+        if ($this->getConnection()->executeStatement($q, array(
             ':login' => $entity->getLogin(),
             ':email' => $entity->getEmail(),
             ':id' => $entity->getId()
         ))) {
-            $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            $data = $this->getConnection()->fetch();
         }
 
         $errs = array();
@@ -132,35 +117,6 @@ class UserMapperPDO extends BaseMapperPDO
             return false;
         }
 
-        try {
-            // delete old connections
-//            $q_delete = 'DELETE FROM `credentials` WHERE user_id = :user_id ';
-//            $stmt = $this->getConnection()->prepareStatement($q_delete);
-//            $stmt->execute(array(':user_id' => $this->getId()));
-//
-//            // add new connections if any
-//            $credentials = $this->getCredentials(true);
-//            if (empty($credentials)) {
-//                return true;
-//            }
-//
-//            $q_insert_params = array();
-//            $values_part = '';
-//            foreach ($credentials as $key => $credential) {
-//                $values_part .= ($values_part === '') ? '' : ', ';
-//                $values_part .= '  ( :user_id_' . $key . ', :credential_' . $key . ' )';
-//                $q_insert_params[':credential_' . $key . ''] = $credential;
-//                $q_insert_params[':user_id_' . $key . ''] = $this->getId();
-//            }
-//            $q_insert = 'INSERT INTO `credentials` ' .
-//                ' ( user_id, credentials ) VALUES ' .
-//                $values_part .' ;';
-//            $stmt = $this->getConnection()->prepareStatement($q_insert);
-//            $stmt->execute($q_insert_params);
-        } catch (\Exception $e) {
-            return false;
-        }
-
         return true;
     }
 
@@ -170,18 +126,19 @@ class UserMapperPDO extends BaseMapperPDO
     protected function insert($entity)
     {
         $q = 'INSERT INTO `' . $this->tablename . '`'.
-            ' ( active, is_admin, login, email, password ) VALUES ' .
-            '( :active, :is_admin, :login, :email, :password );';
+            ' ( active, login, email, password, credentials ) VALUES ' .
+            '( :active, :login, :email, :password, :credentials );';
 
-        $stmt = $this->getConnection()->prepareStatement($q);
-        $stmt->execute(array(
+
+        $this->getConnection()->executeStatement($q, array(
             ':active' => $entity->getActive(),
             ':login' => $entity->getLogin(),
             ':email' => $entity->getEmail(),
             ':password' => $entity->getPassword(),
+            ':credentials' => $entity->getCredentials(),
         ));
 
-        $entity->setId($this->getLastInsertId());
+        $entity->setId($this->getConnection()->getLastInsertId());
     }
 
     /**
@@ -190,17 +147,16 @@ class UserMapperPDO extends BaseMapperPDO
     protected function update($entity)
     {
         $q = 'UPDATE `'.$this->tablename.'` AS '.$this->alias.' SET ' .
-            ' active=:active, login=:login, email=:email, password=:password ' .
+            ' active=:active, login=:login, email=:email, password=:password, credentials=:credentials ' .
             ' WHERE '.$this->alias.'.'.$this->id_field.' = :id;';
 
-        $stmt = $this->getConnection()->prepareStatement($q);
-
-        $stmt->execute(array(
+        $this->getConnection()->executeStatement($q, array(
             ':id' => $entity->getId(),
             ':active' => $entity->getActive(),
             ':login' => $entity->getLogin(),
             ':email' => $entity->getEmail(),
-            ':password' => $entity->getPassword()
+            ':password' => $entity->getPassword(),
+            ':credentials' => $entity->getCredentials(),
         ));
     }
 

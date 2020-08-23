@@ -103,9 +103,9 @@ Class MinimeUser
    *
    * @param $credentials
    */
-  public function setCredentials($credential)
+  public function setCredentials($credentials)
   {
-      $this->credential = $credential;
+      $this->credential = array_map('strtoupper', $credentials);
   }
 
   /**
@@ -114,8 +114,8 @@ Class MinimeUser
    */
   public function setCredential($credential)
   {
-      $this->credential[] = $credential;
-      $this->credential = array_unique($this->credential);
+      $this->credentials[] = strtoupper($credential);
+      $this->credentials = array_unique($this->credentials);
   }
 
   /**
@@ -124,7 +124,7 @@ Class MinimeUser
    */
   public function hasCredential($credential)
   {
-    return in_array($credential, $this->credential);
+    return in_array(strtoupper($credential), $this->credentials);
   }
 
     /**

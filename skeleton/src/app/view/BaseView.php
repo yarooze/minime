@@ -20,7 +20,6 @@ Abstract Class BaseView extends MinimeBaseView
      * @param string $partial - partial's name (without "_")
      * @param array  $params  - variables for the partial
      */
-    /*
     public function renderPartial($partial, $params) {
         $app = $this->app;
         $view = $this;
@@ -32,7 +31,6 @@ Abstract Class BaseView extends MinimeBaseView
         }
         include $templateDir . '_'.$partial.'.tpl.php';
     }
-    */
 
 
     /**

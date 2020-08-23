@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__.'/../Helper/HtmlHelper.php';
+/**
+ * array('partial' => 'crudListCSVField')
+ */
+$app->loadHelper('HtmlHelper');
 
 $value = isset($entity[$fieldName]) ? $entity[$fieldName] : '';
 $value = implode(', ', array_unique(explode(',', $value)));

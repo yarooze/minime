@@ -78,6 +78,14 @@ elseif (isset($fieldData['type']) && in_array($fieldData['type'], array('checkbo
                 ?></small>
         </div>
     </div><?php
+elseif (isset($fieldData['type']) && $fieldData['type'] === 'hidden'):
+    ?>
+        <input name="<?php echo $form->getFullFieldName($fieldName); ?>" type="hidden"
+               value="<?php $view->printString($form->getValue($fieldName)); ?>" <?php
+        foreach ($attr as $key => $val) {
+            echo ' ' . $key . '="'.  $val . '" ';
+        } ?> >
+    <?php
 else:
     ?><div class="form-group row">
         <label for="<?php $view->printString($fieldName); ?>" class="col-sm-2 col-form-label"><?php $view->printString($title); ?></label>

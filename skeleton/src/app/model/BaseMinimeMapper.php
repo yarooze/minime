@@ -1,7 +1,5 @@
 <?php
-
 namespace app\model;
-
 
 /**
  * Base class for data base records
@@ -10,18 +8,15 @@ namespace app\model;
  * @author jb
  *
  */
-abstract class MinimeMapper implements MinimeMapperInterface
+abstract class BaseMinimeMapper implements MinimeMapperInterface
 {
     /**
      * db and table names and table alias for the queries
      * @var string
      */
     protected $tablename = null;
-    protected $entityname = null;
     protected $alias = 'c';
     protected $id_field = 'id';
-
-    protected $app  = null;
 
     /**
      * @var
@@ -29,47 +24,30 @@ abstract class MinimeMapper implements MinimeMapperInterface
     protected $connection;
 
     /**
-     * DB fields mapping. Additional to the entity mapping. NB! Overwrite in the child class
+     * Fields mapping. NB! Overwrite in the child class
      *
      * @var array
      * e.g.
      * 'fieldname1' => [ // lower case & removed underscores
+     *   'getset' => 'FieldName1', // $this->getFieldName1() / $this->setFieldName1()
+     *   'field' => 'fieldName1',  // $this->fieldName1
      *   'dbfield' => 'field_name1', // 'SELECT `field_name1`'
      * ]
      */
-    protected $dbmapping = array();
-
-    public function getIdField()
-    {
-        return $this->id_field;
-    }
+    protected $mapping = array();
 
     /**
      * @return mixed
      */
     public function getId($entity)
     {
-        if (is_array($this->id_field)) {
-            $id = arary();
-            foreach ($this->id_field as $id_field) {
-                $mapping = $this->getMappingByFieldName($id_field, $entity);
-                if ($mapping === null) {
-                    throw new \RuntimeException('No mapping for the field [' . $id_field . ']!');
-                }
-                $getter = 'get' . $mapping['getset'];
-                
-                $id[$id_field] = $entity->$getter();
-            } 
-        } else {
-          $mapping = $this->getMappingByFieldName($this->id_field, $entity);
-          if ($mapping === null) {
-              throw new \RuntimeException('No mapping for the field [' . $this->id_field . ']!');
-          }
-          $getter = 'get' . $mapping['getset']; 
-          $id = $entity->$getter();
+        $id_field = $this->id_field;
+        $mapping = $this->getMappingByFieldName($id_field, $entity);
+        if ($mapping === null) {
+            throw new \RuntimeException('No mapping for the field [' . $id_field . ']!');
         }
-
-        return $id;
+        $getter = 'set' . $mapping['getset'];
+        return $entity->$getter();
     }
 
     /**
@@ -86,12 +64,6 @@ abstract class MinimeMapper implements MinimeMapperInterface
     public function __destruct()
     {
         $this->connection = null;
-    }
-
-    public function createEntity()
-    {
-        $entittyName =  'app\model\\'.$this->entityname.'Entity';
-        return new $entittyName();
     }
 
     /**
@@ -156,9 +128,13 @@ abstract class MinimeMapper implements MinimeMapperInterface
     abstract protected function update($entity);
 
     /**
-     * @inheritdoc
+     * to fill fields fast. (Be aware! There is no validation by default here!)
+     * @param array $values ('fieldname' => 'value')
+     *        with setters:'fieldname' --> setFieldname('value')
+     *        without setters: $this->$fieldname = $value
+     * @param bool $use_setters
      */
-    public function setFieldsFromArray($values, &$entity,  $use_setters = true)
+    public function setFieldsFromArray($values, $entity, $use_setters = true)
     {
         if (!is_array($values)) {
             return;
@@ -169,22 +145,19 @@ abstract class MinimeMapper implements MinimeMapperInterface
                 //throw new \RuntimeException('No mapping for the field [' . $f_name . ']!');
                 continue;
             }
-            $setter = 'set' . $mapping['getset'];
-            $entity->$setter($f_value);
+            if ($use_setters) {
+                $setter = 'set' . $mapping['getset'];
+                $entity->$setter($f_value);
+            } else {
+                $f_name = $mapping['field'];
+                $entity->$f_name = $f_value;
+            }
         }
     }
 
     public function getMappingByFieldName($f_name, $entity) {
-        $mapping = $this->getMapping($entity);
         $normalized = strtolower(str_replace('_', '', $f_name));
-        return isset($mapping[$normalized]) ? $mapping[$normalized] : null;
-    }
-    
-    public function getMapping($entity) {
-        $mapping = $entity->getMapping();
-        foreach ($this->mapping as $key => $value) {
-            $mapping[$key] = array_merge($mapping[$key], $value);
-        }
+        $mapping = isset($this->mapping[$normalized]) ? $this->mapping[$normalized] : null;
         return $mapping;
     }
 

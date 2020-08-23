@@ -12,7 +12,7 @@ use app\Application;
  * @author jb
  *
  */
-Interface MapperInterface
+Interface MinimeMapperInterface
 {
 
     /**
@@ -82,12 +82,20 @@ Interface MapperInterface
      * @param $entity
      * @param bool $use_setters
      */
-    public function setFieldsFromArray($values, &$entity);
+    public function setFieldsFromArray($values, &$entity, $use_setters = true);
 
-    public function getMappingByFieldName($f_name);
-    
-    /**  @return array */
-    public function getMapping();
+    /**
+     * @param $f_name
+     * @param MinimeEntityInterface $entity
+     * @return mixed
+     */
+    public function getMappingByFieldName($f_name, $entity);
+
+    /**
+     * @param MinimeEntityInterface $entity
+     * @return mixed
+     */
+    public function getMapping($entity);
 
     /**
      *

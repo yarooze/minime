@@ -13,12 +13,45 @@ class UserEntity extends BaseEntity
     protected $created;
     protected $updated;
 
-    protected $credentials = array();
+    protected $credentials = '';
 
-    public function __construct()
-    {
-
-    }
+    /**
+     * @inheritDoc
+     */
+    protected $mapping = array(
+        'id' => array(
+            'getset' => 'Id',
+            'field' => 'id',
+        ),
+        'active' => array(
+            'getset' => 'Active',
+            'field' => 'active',
+        ),
+        'login' => array(
+            'getset' => 'Login',
+            'field' => 'login',
+        ),
+        'email' => array(
+            'getset' => 'Email',
+            'field' => 'email',
+        ),
+        'password' => array(
+            'getset' => 'Password',
+            'field' => 'password',
+        ),
+        'created' => array(
+            'getset' => 'Created',
+            'field' => 'created',
+        ),
+        'updated' => array(
+            'getset' => 'Updated',
+            'field' => 'updated',
+        ),
+        'credentials' => array(
+            'getset' => 'Credentials',
+            'field' => 'credentials',
+        ),
+    );
 
     /**
      * @return mixed
@@ -41,7 +74,7 @@ class UserEntity extends BaseEntity
      */
     public function getActive()
     {
-        return $this->active;
+        return (int)$this->active;
     }
 
     /**
@@ -141,6 +174,7 @@ class UserEntity extends BaseEntity
         if ($asArray && count($credentials) === 1 && $credentials[0] === '') {
             $credentials = array();
         }
+        $this->fixCredentials();
         return $credentials;
     }
 
@@ -149,7 +183,21 @@ class UserEntity extends BaseEntity
      */
     public function setCredentials($credentials)
     {
+        if (is_array($credentials) ) {
+            $credentials = implode(',', $credentials);
+        }
+        $credentials = (string)$credentials;
         $this->credentials = $credentials;
+        $this->fixCredentials();
     }
 
+    protected function fixCredentials() {
+        $credentials = $this->credentials;
+        $credentials = explode(',', $credentials);
+        $credentials = array_map('trim', $credentials);
+        $credentials = array_filter($credentials);
+        $credentials = array_unique($credentials);
+        $credentials = implode(',', $credentials);
+        $this->credentials = $credentials;
+    }
 }

@@ -3,28 +3,41 @@
 namespace app\model;
 
 
-abstract class MinimeEntity implements \ArrayAccess
+abstract class MinimeEntity implements MinimeEntityInterface, \ArrayAccess
 {
-    protected $app;
-    
-    protected $mapper;
-    
+    /** Internal mapping without db fields @var null | array */
+    protected $mapping;
+
+    /** @var int */
     protected $id;
 
-    public function __construct($mapper, $app)
+    /**
+     * MinimeEntity constructor.
+     */
+    public function __construct()
     {
-        $this->mapper = $mapper;
-        $this->app = $app;
     }
 
+    /**
+     * @param string $name
+     * @return mixed
+     */
     public function getMappingByFieldName($name) {
-        $mapping = $this->mapper->getMappingByFieldName($name);
+        if ($this->mapping !== null) {
+            $normalized = strtolower(str_replace('_', '', $name));
+            $mapping = isset($this->mapping[$normalized]) ? $this->mapping[$normalized] : null;
+        }
+
         if ($mapping === null) {
             throw new \RuntimeException('No mapping for the field [' . $name . ']!');
         }
         return $mapping;
     }
-        
+
+    public function getMapping() {
+        return $this->mapping;
+    }
+
     /**
      * @return mixed
      */
@@ -43,7 +56,10 @@ abstract class MinimeEntity implements \ArrayAccess
 
     public function getData() {
         $data = array();
-        $maping = $this->mapper->getMapping();
+        if ($this->mapping !== null) {
+            $maping = $this->mapping;
+        }
+
         
         foreach ($maping as $fieldMapping) {
             $getter = 'get'.$fieldMapping['getset'];
@@ -56,14 +72,14 @@ abstract class MinimeEntity implements \ArrayAccess
     // ArrayAccess
     public function offsetSet($key, $value)
     {
-        if (is_null($key) && !isset($this->$key)) {
-            return; //$this->storage[] = $value;
-        } else {
+        //if (is_null($key) && !isset($this->$key)) {
+        //    return; //$this->storage[] = $value;
+        //} else {
             $mapping = $this->getMappingByFieldName($key);
             $setter = 'set' . $mapping['getset'];            
             $this->$setter($value);
             //$this->$key = $value;
-        }
+        //}
     }
 
     public function offsetExists($key)

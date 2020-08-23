@@ -89,7 +89,6 @@ Abstract Class MinimeBaseView
      * @param string $partial - partial's name (without "_")
      * @param array  $params  - variables for the partial
      */
-    //abstract public function renderPartial($partial, $params);
     public function renderPartial($partial, $params) {
         $app = $this->app;
         $view = $this;

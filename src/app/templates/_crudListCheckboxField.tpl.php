@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__.'/../Helper/HtmlHelper.php';
+/**
+ * array('partial' => 'crudListCheckboxField')
+ */
+$app->loadHelper('HtmlHelper');
 
 $value = $entity[$fieldName];
 ?>

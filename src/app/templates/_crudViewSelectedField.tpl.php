@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__.'/../Helper/HtmlHelper.php';
+/**
+ * array('partial' => 'crudViewSelectedField')
+ */
+$app->loadHelper('HtmlHelper');
 $i18n = $this->app->i18n;
 $title = (isset($fieldData['title'])) ? $i18n->trans($fieldData['title']) : $fieldName;
 $value = $entity[$fieldName];

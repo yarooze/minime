@@ -252,11 +252,11 @@ Class MinimeRouter
         $routeCredentials = $this->getRouteCredentials();
         $isFreeRoute = $this->isFreeRoute();
 
-        $route_name = $this->getCurrentRouteName();
+        $routeName = $this->getCurrentRouteName();
         // Every route must have credentials or it is blocked
         if (empty($routeCredentials)) {
             if($this->app->config->get('env') === 'dev') {
-                throw new UnknownRouteException('The credentials for the route [' . $routeName . '] [' . $this->app->request->getUri() . '] is not defined!');
+                throw new UnknownRouteException('The credentials for the route Name: [' . $routeName . '] URI: [' . $this->app->request->getUri() . '] is not defined!');
             } else {
                 $this->redirect('logout', array());
             }

@@ -3,6 +3,7 @@
 namespace app\model;
 
 
-class UserMapperJSON //extends BaseMapperJSON
+class UserMapperJSON extends BaseMapperJSON
 {
+    protected $entityname = 'User';
 }

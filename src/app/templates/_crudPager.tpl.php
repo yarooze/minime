@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__.'/../Helper/HtmlHelper.php';
+$app->loadHelper('HtmlHelper');
 $i18n = $this->app->i18n;
 if ($filter['all_pages'] > 1) :
     $plusMinusPages = 10;
