@@ -75,7 +75,7 @@ Abstract Class MinimeBaseView
 
     /**
      * @param string $string
-     * @param boool  $raw
+     * @param bool  $raw
      */
     public function printString($string, $raw = false) {
         if($raw) {

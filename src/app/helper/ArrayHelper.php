@@ -13,8 +13,8 @@ if(!function_exists('fixUTF8Fields'))
  
   /**
    * fixes utf8 text fields of the record|array before output recursively
-   * @param  array|record $record
-   * @return array|record
+   * @param  mixed array|record $record
+   * @return mixed array|record
    */
   function fixUTF8Fields($record)
   {
@@ -65,7 +65,7 @@ if(!function_exists('getByPath'))
   /** 
    * @param string path e.g "a.b.c" 
    * @param array arr e.g arr[a][b][c]
-   * @param def default value
+   * @param mixed def default value
    * 
    * @return mixed
    */

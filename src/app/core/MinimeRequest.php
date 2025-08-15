@@ -164,7 +164,7 @@ Class MinimeRequest
    *
    * @param string $p_name
    * @param string $default
-   * @return Ambigous <string, multitype:>
+   * @return mixed <string, multitype:>
    */
   public function getParameter($p_name, $default = null)
   {
