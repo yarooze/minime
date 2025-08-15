@@ -20,7 +20,7 @@ Class MinimeUser
      * @var 0|1 - to logaout after some time or not
      */
   protected $keepForever = 0;
-  protected $credential = array();
+  protected $credentials = array();
   protected $user = null;
 
   /**
@@ -96,7 +96,7 @@ Class MinimeUser
    */
   public function getCredentials()
   {
-      return $this->credential;
+      return $this->credentials;
   }
 
   /**
@@ -105,7 +105,7 @@ Class MinimeUser
    */
   public function setCredentials($credentials)
   {
-      $this->credential = array_map('strtoupper', $credentials);
+      $this->credentials = array_map('strtoupper', $credentials);
   }
 
   /**
