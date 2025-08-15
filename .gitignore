@@ -5,3 +5,4 @@
 /config/config_app.inc.php
 /config/routing.inc.php
 /vendor
+/build/

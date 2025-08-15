@@ -1,6 +1,8 @@
 <?php
 namespace app\view;
 
+use app\exception\MinimeException;
+
 /**
  *
  * @author jb
@@ -96,7 +98,8 @@ Abstract Class MinimeBaseView
 
         $templateDir = $this->getTemplateDir();
         if (!file_exists ($templateDir . '_'.$partial.'.tpl.php')) {
-            $templateDir = parent::getTemplateDir();
+            throw new MinimeException("Template '{$templateDir}_{$partial}.tpl.php' not found");
+            // $templateDir = parent::getTemplateDir();
         }
         include $templateDir . '_'.$partial.'.tpl.php';
     }
@@ -114,7 +117,8 @@ Abstract Class MinimeBaseView
 
         $templateDir = $this->getTemplateDir();
         if (!file_exists ($templateDir . $template.'.tpl.php')) {
-            $templateDir = parent::getTemplateDir();
+            throw new MinimeException("Template '{$templateDir}_{$partial}.tpl.php' not found");
+            // $templateDir = parent::getTemplateDir();
         }
         include $templateDir . $template.'.tpl.php';
     }

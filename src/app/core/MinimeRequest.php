@@ -34,6 +34,12 @@ Class MinimeRequest
   protected $request_scheme = null;
 
   /**
+   * '0.0.0.0'
+   * @var null|string
+   */
+  protected $remoteHost = null;
+
+  /**
    * request parameters
    * @var array
    */

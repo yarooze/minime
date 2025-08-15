@@ -56,7 +56,7 @@ if(!function_exists('getAV'))
    */
   function getAV(array $array, $key, $standard = null)
   {
-    return key_exists($key, $array)?$array[$key]:$standard;
+    return array_key_exists($key, $array)?$array[$key]:$standard;
   }
 }
 
